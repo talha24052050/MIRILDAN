@@ -55,8 +55,8 @@ Bu proje 13 aşamada geliştirilmektedir. Güncel durum için `CURRENT_PHASE.md`
 ### Aşamalar
 
 - [x] **1.** PRD + Teknik Karar Dokümanı
-- [ ] **2.** Tasarım Sistemi ve Mockup'lar
-- [ ] **3.** Proje İskeleti ve Temel Mimari
+- [x] **2.** Tasarım Sistemi ve Mockup'lar
+- [x] **3.** Proje İskeleti ve Temel Mimari
 - [ ] **4.** Veri Modeli ve Yerel Depolama
 - [ ] **5.** Ana Ekran: Kayıt Butonu ve Ses Kaydı
 - [ ] **6.** Renk ve Metin Ekleme Akışı
