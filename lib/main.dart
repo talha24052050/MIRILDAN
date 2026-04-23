@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'mockup_app.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'app.dart';
+import 'data/services/database_service.dart';
 
-void main() {
-  runApp(const MockupApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DatabaseService.init();
+  runApp(const ProviderScope(child: MiriildanApp()));
 }

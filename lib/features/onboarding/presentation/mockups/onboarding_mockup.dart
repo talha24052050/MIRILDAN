@@ -62,7 +62,7 @@ class _OnboardingMockupState extends State<OnboardingMockup> {
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.easeInOut,
                     ),
-                    child: const Text('Devam'),
+                    child: const Text(AppStrings.onboardingContinue),
                   )
                 else ...[
                   ElevatedButton(
@@ -109,7 +109,7 @@ class _OnboardingPage extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [AppColors.darkBackground, Color(0xFF0D1528)],
+          colors: [AppColors.darkBackground, AppColors.darkSurface],
         ),
       ),
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
@@ -133,7 +133,7 @@ class _OnboardingPage extends StatelessWidget {
               color: AppColors.darkOnSurfaceVariant,
             ),
           ),
-          const SizedBox(height: 160),
+          const SizedBox(height: AppSpacing.xxxl + AppSpacing.xxxl),
         ],
       ),
     );

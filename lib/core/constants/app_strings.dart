@@ -9,6 +9,7 @@ class AppStrings {
   static const String onboarding2Subtitle = 'Her şey senin tempondan, sen istediğinde.';
   static const String onboarding3Title = 'Her şey senin\nkontrolünde.';
   static const String onboarding3Subtitle = 'Kayıtların sadece senin cihazında.\nHesap açmak isteğe bağlı.';
+  static const String onboardingContinue = 'Devam';
   static const String onboardingStart = 'Başla';
   static const String onboardingCreateAccount = 'Hesap Oluştur';
   static const String onboardingSkip = 'Şimdi değil';

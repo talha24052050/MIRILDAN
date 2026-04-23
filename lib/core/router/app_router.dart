@@ -1,0 +1,69 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+part 'routes.dart';
+
+final appRouter = GoRouter(
+  initialLocation: AppRoutes.galaxy,
+  debugLogDiagnostics: false,
+  routes: [
+    GoRoute(
+      path: AppRoutes.onboarding,
+      name: 'onboarding',
+      builder: (context, state) => const _PlaceholderScreen(title: 'Onboarding'),
+    ),
+    GoRoute(
+      path: AppRoutes.galaxy,
+      name: 'galaxy',
+      builder: (context, state) => const _PlaceholderScreen(title: 'Galaxy'),
+    ),
+    GoRoute(
+      path: AppRoutes.record,
+      name: 'record',
+      builder: (context, state) => const _PlaceholderScreen(title: 'Kayıt'),
+    ),
+    GoRoute(
+      path: AppRoutes.entryDetail,
+      name: 'entryDetail',
+      builder: (context, state) {
+        final id = state.pathParameters['id']!;
+        return _PlaceholderScreen(title: 'Kayıt Detay: $id');
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.listView,
+      name: 'listView',
+      builder: (context, state) => const _PlaceholderScreen(title: 'Liste'),
+    ),
+    GoRoute(
+      path: AppRoutes.settings,
+      name: 'settings',
+      builder: (context, state) => const _PlaceholderScreen(title: 'Ayarlar'),
+    ),
+  ],
+  errorBuilder: (context, state) => Scaffold(
+    body: Center(child: Text('Sayfa bulunamadı: ${state.uri}')),
+  ),
+);
+
+class _PlaceholderScreen extends StatelessWidget {
+  const _PlaceholderScreen({required this.title});
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: Center(child: Text('$title ekranı — Aşama ${_phaseFor(title)}\'de gelecek')),
+    );
+  }
+
+  String _phaseFor(String title) {
+    if (title.contains('Onboarding')) return '9';
+    if (title.contains('Galaxy')) return '8';
+    if (title.contains('Kayıt')) return '5-6';
+    if (title.contains('Liste')) return '7';
+    if (title.contains('Ayarlar')) return '10';
+    return '?';
+  }
+}

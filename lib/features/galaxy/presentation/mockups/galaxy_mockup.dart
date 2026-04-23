@@ -96,12 +96,13 @@ class GalaxyMockup extends StatelessWidget {
 class _StarField extends StatelessWidget {
   const _StarField();
 
+  static final _rng = Random(42);
+
   @override
   Widget build(BuildContext context) {
-    final rng = Random(42);
     return CustomPaint(
       size: MediaQuery.of(context).size,
-      painter: _StarPainter(rng),
+      painter: _StarPainter(_rng),
     );
   }
 }
@@ -335,9 +336,3 @@ class _IconButton extends StatelessWidget {
   }
 }
 
-// Sabit referanslar — magic number yerine
-class AppSize {
-  static const double recordButtonSize = 80.0;
-  static const double iconSizeMd = 24.0;
-  static const double iconSizeLg = 32.0;
-}
