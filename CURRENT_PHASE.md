@@ -7,29 +7,29 @@
 | 1 | PRD + Teknik Karar Dokümanı | `main` | ✅ |
 | 2 | Tasarım Sistemi ve Mockup'lar | `feature/phase-2-design-system` | ✅ |
 | 3 | Proje İskeleti ve Temel Mimari | `feature/phase-3-skeleton` | ✅ |
+| 4 | Veri Modeli ve Yerel Depolama | `feature/phase-4-data-model` | ✅ |
 
 ---
 
-## Sıradaki Aşama: Aşama 4 — Veri Modeli ve Yerel Depolama
+## Aktif Aşama: Aşama 5 — Ana Ekran: Kayıt Butonu ve Ses Kaydı
 
-**Durum:** Bekliyor (kullanıcı onayı alındı)
-**Branch:** `feature/phase-4-data-model` (henüz açılmadı)
+**Durum:** Devam ediyor
+**Branch:** `feature/phase-5-recording`
 
 ### Yapılacaklar
 
-- [ ] `Entry` modeli (Isar `@collection`) — ses/metin/karma kayıt
-- [ ] `UserPreferences` modeli — tema, dil, tarih tercihi
-- [ ] `EarnedBadge` modeli — gizli rozetler
-- [ ] `EntryRepository` — CRUD, sıralama, filtreleme
-- [ ] `PreferencesRepository` — tercih okuma/yazma
-- [ ] Ses dosyası yönetimi (`AudioFileService`) — kaydet, sil, orphan temizle
-- [ ] `isar_generator` uyumluluk sorunu çözümü veya manuel schema
-- [ ] Unit testler (repository katmanı)
-- [ ] `flutter analyze` + `flutter test` temiz
+- [ ] Ana ekran UI — büyük kayıt butonu, minimal tasarım, Galaxy preview
+- [ ] Mikrofon izni akışı — reddedilince metin kaydına yönlendir, uygulama kırılmaz
+- [ ] Ses kaydı — `record` paketi ile başlat/durdur, süre göstergesi
+- [ ] Metin kaydı — alternatif kısa metin girişi
+- [ ] Kayıt sonrası — `AudioFileService` + `EntryRepository` ile kaydet
+- [ ] Riverpod provider'ları — kayıt state yönetimi
+- [ ] Widget testleri — kayıt butonu ve temel akış
 
 ### Teslim Kriterleri
 
-- Entry veritabanına yazılabilir ve okunabilir
-- Repository üzerinden filtreleme (renk, tip, tarih) çalışır
-- Ses dosyası silinince veritabanı kaydı da silinir
-- Unit testler geçiyor
+- Kayıt butonu ile ses kaydı başlatılabilir ve durdurulabilir
+- Mikrofon izni reddedilince uygulama çalışmaya devam eder
+- Ses kaydı tamamlanınca veritabanına yazılır
+- Metin kaydı alternatif olarak çalışır
+- Widget testleri geçiyor

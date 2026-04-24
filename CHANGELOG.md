@@ -7,10 +7,23 @@ Format: [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/)
 
 ## [Unreleased]
 
-### Aşama 4 — Veri Modeli ve Yerel Depolama (Bekliyor)
-- Entry, UserPreferences, EarnedBadge Isar modelleri
-- Repository katmanı ve unit testler
-- Ses dosyası yönetim servisi
+### Aşama 5 — Ana Ekran: Kayıt Butonu ve Ses Kaydı (Devam Ediyor)
+
+---
+
+## Aşama 4 — Veri Modeli ve Yerel Depolama
+
+**Branch:** `feature/phase-4-data-model` | **Tarih:** Nisan 2026
+
+### Eklendi
+- `lib/data/models/entry.dart` — Entry modeli (freezed, EntryType + EntryColor enum)
+- `lib/data/models/user_preferences.dart` — UserPreferences modeli (freezed)
+- `lib/data/models/earned_badge.dart` — EarnedBadge modeli (freezed)
+- `lib/data/repositories/entry_repository.dart` — CRUD, renk/tip filtresi, count, tarih sıralama
+- `lib/data/repositories/preferences_repository.dart` — tema ve dil tercihi okuma/yazma
+- `lib/data/services/audio_file_service.dart` — ses dosyası kaydetme, silme, orphan temizleme
+- `lib/data/services/database_service.dart` — `initInMemory()` test desteği eklendi
+- `test/data/repositories/entry_repository_test.dart` — 8 unit test (hepsi geçiyor)
 
 ---
 

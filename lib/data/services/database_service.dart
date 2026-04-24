@@ -1,28 +1,58 @@
-import 'package:isar/isar.dart';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
 
 class DatabaseService {
   DatabaseService._();
 
-  static Isar? _instance;
+  static Database? _db;
 
-  static Isar get instance {
-    assert(_instance != null, 'DatabaseService.init() çağrılmadan önce erişim yapıldı.');
-    return _instance!;
+  static Database get db {
+    assert(_db != null, 'DatabaseService.init() henüz çağrılmadı');
+    return _db!;
   }
 
   static Future<void> init() async {
-    if (_instance != null) return;
+    if (_db != null) return;
     final dir = await getApplicationDocumentsDirectory();
-    _instance = await Isar.open(
-      [],
-      directory: dir.path,
-      name: 'mirildan',
+    final path = join(dir.path, 'mirildan.db');
+    _db = await openDatabase(path, version: 1, onCreate: _onCreate);
+  }
+
+  static Future<void> initInMemory() async {
+    if (_db != null) return;
+    _db = await openDatabase(
+      inMemoryDatabasePath,
+      version: 1,
+      onCreate: _onCreate,
     );
   }
 
+  static Future<void> _onCreate(Database db, int version) async {
+    await db.execute('''
+      CREATE TABLE entries (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        created_at INTEGER NOT NULL,
+        type TEXT NOT NULL,
+        color TEXT NOT NULL,
+        audio_path TEXT,
+        audio_duration_ms INTEGER,
+        text TEXT,
+        note TEXT
+      )
+    ''');
+
+    await db.execute('''
+      CREATE TABLE earned_badges (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        badge_id TEXT NOT NULL UNIQUE,
+        earned_at INTEGER NOT NULL
+      )
+    ''');
+  }
+
   static Future<void> close() async {
-    await _instance?.close();
-    _instance = null;
+    await _db?.close();
+    _db = null;
   }
 }
