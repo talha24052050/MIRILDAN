@@ -26,11 +26,13 @@ class RecordButton extends StatelessWidget {
         : AppSize.recordButtonSize;
     final color = isRecording ? AppColors.error : AppColors.accent;
 
+    // onTapDown/onTapUp, kısa dokunuş ve uzun basışın ikisini de karşılar.
+    // onLongPressStart kullanılmaz — Flutter'da longPress gesture'ı hem
+    // onTapDown hem onLongPressStart tetikler; bu da çift startRecording() demektir.
     return GestureDetector(
       onTapDown: (_) => onPressStart(),
       onTapUp: (_) => onPressEnd(),
-      onLongPressStart: (_) => onPressStart(),
-      onLongPressEnd: (_) => onPressEnd(),
+      onTapCancel: () => onPressEnd(),
       child: Transform.scale(
         scale: scale,
         child: AnimatedContainer(

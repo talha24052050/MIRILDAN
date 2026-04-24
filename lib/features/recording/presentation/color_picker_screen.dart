@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_colors.dart';
@@ -12,7 +11,7 @@ import '../../../data/models/entry.dart';
 import '../../../data/repositories/entry_repository.dart';
 import '../../../data/services/audio_file_service.dart';
 
-class ColorPickerScreen extends ConsumerStatefulWidget {
+class ColorPickerScreen extends StatefulWidget {
   const ColorPickerScreen({
     super.key,
     this.audioPath,
@@ -28,10 +27,10 @@ class ColorPickerScreen extends ConsumerStatefulWidget {
   final String? text;
 
   @override
-  ConsumerState<ColorPickerScreen> createState() => _ColorPickerScreenState();
+  State<ColorPickerScreen> createState() => _ColorPickerScreenState();
 }
 
-class _ColorPickerScreenState extends ConsumerState<ColorPickerScreen> {
+class _ColorPickerScreenState extends State<ColorPickerScreen> {
   EmotionColor? _selected;
   final _noteController = TextEditingController();
   bool _saving = false;
@@ -46,14 +45,17 @@ class _ColorPickerScreenState extends ConsumerState<ColorPickerScreen> {
     if (_selected == null || _saving) return;
     setState(() => _saving = true);
 
+    // GoRouter'ı async gap öncesinde yakala
+    final router = GoRouter.of(context);
+
     try {
-      final entryType = _resolveType();
-      final entryColor = EntryColor.values[_selected!.index];
+      // EmotionColor → EntryColor: index yerine name bazlı, enum sırası değişse bile güvenli
+      final entryColor = EntryColor.values.byName(_selected!.name);
 
       final entry = Entry(
         id: 0,
         createdAt: DateTime.now(),
-        type: entryType,
+        type: _resolveType(),
         color: entryColor,
         audioPath: widget.audioPath,
         audioDurationMs: widget.audioDurationMs,
@@ -66,8 +68,7 @@ class _ColorPickerScreenState extends ConsumerState<ColorPickerScreen> {
       await EntryRepository().insert(entry);
 
       if (!mounted) return;
-      // Başarıyla kaydedildi — Galaxy'e dön
-      context.go(AppRoutes.galaxy);
+      router.go(AppRoutes.galaxy);
     } catch (_) {
       if (!mounted) return;
       setState(() => _saving = false);
@@ -78,12 +79,12 @@ class _ColorPickerScreenState extends ConsumerState<ColorPickerScreen> {
   }
 
   Future<void> _cancel() async {
-    // Ses dosyası varsa sil
+    final router = GoRouter.of(context);
     if (widget.audioPath != null) {
       await AudioFileService.delete(widget.audioPath!);
     }
     if (!mounted) return;
-    context.pop();
+    router.pop();
   }
 
   EntryType _resolveType() {

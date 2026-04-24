@@ -24,6 +24,8 @@ class RecordingController extends _$RecordingController {
   }
 
   Future<void> startRecording() async {
+    if (state is RecordingInProgress) return;
+
     final permission = await Permission.microphone.request();
     if (!permission.isGranted) {
       state = const RecordingState.permissionDenied();

@@ -8,7 +8,9 @@ class DatabaseService {
   static Database? _db;
 
   static Database get db {
-    assert(_db != null, 'DatabaseService.init() henüz çağrılmadı');
+    if (_db == null) {
+      throw StateError('DatabaseService.init() henüz çağrılmadı.');
+    }
     return _db!;
   }
 
