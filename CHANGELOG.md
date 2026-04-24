@@ -7,7 +7,25 @@ Format: [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/)
 
 ## [Unreleased]
 
-### Aşama 5 — Ana Ekran: Kayıt Butonu ve Ses Kaydı (Devam Ediyor)
+## Aşama 5 — Ana Ekran: Kayıt Butonu ve Ses Kaydı
+
+**Branch:** `feature/phase-5-recording` | **Tarih:** Nisan 2026
+
+### Eklendi
+- `lib/features/recording/data/audio_recorder_service.dart` — `record` paketi wrapper, amplitude stream
+- `lib/features/recording/domain/recording_state.dart` — freezed sealed state (idle, recording, done, permissionDenied, error)
+- `lib/features/recording/providers/recording_providers.dart` — `RecordingController` (@riverpod): kayıt başlat/durdur/iptal
+- `lib/features/recording/presentation/recording_screen.dart` — ses kaydı ekranı + metin modu (mikrofon izni reddedilince)
+- `lib/features/recording/presentation/color_picker_screen.dart` — renk seçimi, not ekleme, DB'ye kaydetme
+- `lib/features/recording/presentation/widgets/record_button.dart` — amplitude'a göre pulse animasyonlu kayıt butonu
+- `lib/features/recording/presentation/widgets/waveform_display.dart` — animasyonlu dalga formu görselleştirmesi
+- `test/features/recording/recording_screen_test.dart` — 5 widget testi
+- Android `RECORD_AUDIO` izni + iOS `NSMicrophoneUsageDescription` eklendi
+- `app_router.dart` güncellendi: `/record` → RecordingScreen, `/record/color` → ColorPickerScreen
+- `AppStrings`: `recordRelease`, `recordPermissionDenied`, `recordTextHint`, `recordContinue` eklendi
+- `AppRoutes`: `colorPicker`, `colorPickerRelative` eklendi
+
+---
 
 ---
 

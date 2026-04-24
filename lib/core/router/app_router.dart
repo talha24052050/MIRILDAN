@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/recording/presentation/color_picker_screen.dart';
+import '../../features/recording/presentation/recording_screen.dart';
+
 part 'routes.dart';
 
 final appRouter = GoRouter(
@@ -10,7 +13,8 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.onboarding,
       name: 'onboarding',
-      builder: (context, state) => const _PlaceholderScreen(title: 'Onboarding'),
+      builder: (context, state) =>
+          const _PlaceholderScreen(title: 'Onboarding'),
     ),
     GoRoute(
       path: AppRoutes.galaxy,
@@ -20,7 +24,21 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.record,
       name: 'record',
-      builder: (context, state) => const _PlaceholderScreen(title: 'Kayıt'),
+      builder: (context, state) => const RecordingScreen(),
+      routes: [
+        GoRoute(
+          path: AppRoutes.colorPickerRelative,
+          name: 'colorPicker',
+          builder: (context, state) {
+            final extra = state.extra as Map<String, dynamic>? ?? {};
+            return ColorPickerScreen(
+              audioPath: extra['audioPath'] as String?,
+              audioDurationMs: extra['durationMs'] as int?,
+              text: extra['text'] as String?,
+            );
+          },
+        ),
+      ],
     ),
     GoRoute(
       path: AppRoutes.entryDetail,
@@ -41,9 +59,8 @@ final appRouter = GoRouter(
       builder: (context, state) => const _PlaceholderScreen(title: 'Ayarlar'),
     ),
   ],
-  errorBuilder: (context, state) => Scaffold(
-    body: Center(child: Text('Sayfa bulunamadı: ${state.uri}')),
-  ),
+  errorBuilder: (context, state) =>
+      Scaffold(body: Center(child: Text('Sayfa bulunamadı: ${state.uri}'))),
 );
 
 class _PlaceholderScreen extends StatelessWidget {
@@ -54,7 +71,9 @@ class _PlaceholderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      body: Center(child: Text('$title ekranı — Aşama ${_phaseFor(title)}\'de gelecek')),
+      body: Center(
+        child: Text('$title ekranı — Aşama ${_phaseFor(title)}\'de gelecek'),
+      ),
     );
   }
 

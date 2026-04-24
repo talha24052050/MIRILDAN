@@ -41,9 +41,9 @@ class _RecordingMockupState extends State<RecordingMockup>
   void _onRecordEnd() {
     setState(() => _isRecording = false);
     _pulseController.stop();
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const ColorPickerMockup()),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const ColorPickerMockup()));
   }
 
   @override
@@ -116,10 +116,34 @@ class _WaveformPlaceholder extends StatelessWidget {
   final bool isRecording;
 
   static const _waveHeights = [
-    16.0, 24.0, 40.0, 32.0, 56.0, 48.0, 64.0, 48.0,
-    72.0, 56.0, 40.0, 64.0, 48.0, 32.0, 56.0, 40.0,
-    72.0, 64.0, 48.0, 56.0, 40.0, 32.0, 48.0, 24.0,
-    40.0, 32.0, 16.0, 8.0,
+    16.0,
+    24.0,
+    40.0,
+    32.0,
+    56.0,
+    48.0,
+    64.0,
+    48.0,
+    72.0,
+    56.0,
+    40.0,
+    64.0,
+    48.0,
+    32.0,
+    56.0,
+    40.0,
+    72.0,
+    64.0,
+    48.0,
+    56.0,
+    40.0,
+    32.0,
+    48.0,
+    24.0,
+    40.0,
+    32.0,
+    16.0,
+    8.0,
   ];
 
   @override
@@ -323,4 +347,3 @@ class _ColorGrid extends StatelessWidget {
     );
   }
 }
-
