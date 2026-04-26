@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../data/repositories/preferences_repository.dart';
+import '../../features/auth/presentation/auth_screen.dart';
 import '../../features/galaxy/presentation/galaxy_screen.dart';
 import '../../features/list_view/presentation/list_view_screen.dart';
+import '../../features/onboarding/presentation/onboarding_screen.dart';
 import '../../features/recording/presentation/color_picker_screen.dart';
 import '../../features/recording/presentation/recording_screen.dart';
 
@@ -11,12 +14,27 @@ part 'routes.dart';
 final appRouter = GoRouter(
   initialLocation: AppRoutes.galaxy,
   debugLogDiagnostics: false,
+  redirect: (context, state) async {
+    final to = state.uri.path;
+    // Onboarding ve auth rotalarında döngüyü engelle
+    if (to == AppRoutes.onboarding || to == AppRoutes.auth) return null;
+
+    try {
+      final prefs = await PreferencesRepository().get();
+      if (!prefs.onboardingCompleted) return AppRoutes.onboarding;
+    } catch (_) {}
+    return null;
+  },
   routes: [
     GoRoute(
       path: AppRoutes.onboarding,
       name: 'onboarding',
-      builder: (context, state) =>
-          const _PlaceholderScreen(title: 'Onboarding'),
+      builder: (context, state) => const OnboardingScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.auth,
+      name: 'auth',
+      builder: (context, state) => const AuthScreen(),
     ),
     GoRoute(
       path: AppRoutes.galaxy,

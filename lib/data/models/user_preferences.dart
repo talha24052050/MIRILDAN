@@ -10,6 +10,7 @@ abstract class UserPreferences with _$UserPreferences {
     @Default('tr') String languageCode,
     String? notificationTime,
     @Default(false) bool notificationsEnabled,
+    @Default(false) bool onboardingCompleted,
   }) = _UserPreferences;
 
   factory UserPreferences.fromJson(Map<String, dynamic> json) =>

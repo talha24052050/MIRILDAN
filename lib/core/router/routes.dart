@@ -11,4 +11,5 @@ class AppRoutes {
   static const String entryDetail = '/entry/:id';
   static const String listView = '/list';
   static const String settings = '/settings';
+  static const String auth = '/auth';
 }

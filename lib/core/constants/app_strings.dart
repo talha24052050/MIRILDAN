@@ -82,6 +82,18 @@ class AppStrings {
   static const String settingsDeleteAll = 'Tüm Verileri Sil';
   static const String settingsAbout = 'Hakkında';
 
+  // Auth
+  static const String authSignInTitle = 'Hoş geldin.';
+  static const String authCreateAccountTitle = 'Hesap oluştur.';
+  static const String authSignInWithGoogle = 'Google ile devam et';
+  static const String authOrDivider = 'veya';
+  static const String authEmailHint = 'E-posta';
+  static const String authPasswordHint = 'Şifre';
+  static const String authSignIn = 'Giriş yap';
+  static const String authCreateAccount = 'Hesap oluştur';
+  static const String authNoAccount = 'Hesabın yok mu? Kayıt ol';
+  static const String authHaveAccount = 'Hesabın var mı? Giriş yap';
+
   // Genel
   static const String appName = 'Mırıldan';
   static const String cancel = 'İptal';

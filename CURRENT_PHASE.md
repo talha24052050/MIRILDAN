@@ -15,17 +15,18 @@
 
 | 7 | Kayıt Listesi, Oynatma ve Filtreleme | `feature/phase-7-list-playback` | ✅ |
 | 8 | Galaxy Görünümü | `feature/phase-8-galaxy` | ✅ |
+| 9 | Onboarding ve Hesap Sistemi | `feature/phase-9-onboarding` | ✅ |
 
 ---
 
-## Sıradaki Aşama: Aşama 9 — Onboarding ve Hesap Sistemi
+## Sıradaki Aşama: Aşama 10 — Bildirimler, Ayarlar, Tema Seçenekleri
 
 **Durum:** Bekliyor (kullanıcı onayı bekleniyor)
-**Branch:** `feature/phase-9-onboarding` (henüz açılmadı)
+**Branch:** `feature/phase-10-settings` (henüz açılmadı)
 
 ### Yapılacaklar
 
-- [ ] Onboarding ekranları (3 sayfa)
-- [ ] Firebase Auth — Google + Apple + Email girişi
-- [ ] Hesap oluşturma / giriş akışı
-- [ ] Misafir mod (hesapsız kullanım)
+- [ ] Bildirim sistemi (flutter_local_notifications)
+- [ ] Ayarlar ekranı (tema, dil, bildirim zamanı)
+- [ ] Tema seçenekleri (4 tema arası geçiş)
+- [ ] Dil seçimi (TR/EN)

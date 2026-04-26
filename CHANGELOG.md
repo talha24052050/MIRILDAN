@@ -7,6 +7,27 @@ Format: [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/)
 
 ## [Unreleased]
 
+## Aşama 9 — Onboarding ve Hesap Sistemi
+
+**Branch:** `feature/phase-9-onboarding` | **Tarih:** Nisan 2026
+
+### Eklendi
+- `lib/features/onboarding/presentation/onboarding_screen.dart` — 3 sayfalık onboarding akışı (PageView, sayfa göstergesi, son sayfada Hesap Oluştur / Şimdi değil)
+- `lib/features/auth/data/auth_service.dart` — Firebase Auth wrapper: Google Sign-In (v7 API), e-posta/şifre giriş + kayıt, şifre sıfırlama, çıkış
+- `lib/features/auth/providers/auth_providers.dart` — `authService`, `authState` (stream), `onboardingCompleted`, `AuthNotifier` provider'ları
+- `lib/features/auth/presentation/auth_screen.dart` — Giriş/Kayıt ekranı: Google butonu, e-posta + şifre formu, hata mesajları, misafir devam
+- `UserPreferences.onboardingCompleted` alanı eklendi (freezed + build_runner)
+- `app_router.dart`: `redirect` callback ile onboarding tamamlanmamışsa `/onboarding`'e yönlendirme
+- `AppRoutes.auth` rotası eklendi
+- Auth string'leri `AppStrings`'e eklendi
+- `test/features/onboarding/onboarding_test.dart` — 5 widget testi
+- `test/features/auth/auth_screen_test.dart` — 5 widget testi
+
+### Değişti
+- `main.dart`: `Firebase.initializeApp()` eklendi (config dosyası olmadan hata yutulur)
+
+---
+
 ## Aşama 8 — Galaxy Görünümü
 
 **Branch:** `feature/phase-8-galaxy` | **Tarih:** Nisan 2026
