@@ -1,65 +1,31 @@
 # CURRENT_PHASE.md — Mevcut Aşama Durumu
 
-## Aşama 1: PRD + Teknik Karar Dokümanı
+## Tamamlanan Aşamalar
 
-**Durum:** ✅ Tamamlandı (Kullanıcı onayı bekleniyor)
-**Başlangıç:** Nisan 2026
-**Bitiş:** —
-**Branch:** `main` (başlangıç dokümantasyonu)
-
----
-
-## Bu Aşamada Yapılanlar
-
-- [x] Ürün Gereksinim Dokümanı (PRD) hazırlandı
-- [x] Teknik Karar Dokümanı hazırlandı
-- [x] CLAUDE.md talimat dosyası yazıldı
-- [x] Git ve proje yapısı kararları belgelendi
+| # | Aşama | Branch | Durum |
+|---|---|---|---|
+| 1 | PRD + Teknik Karar Dokümanı | `main` | ✅ |
+| 2 | Tasarım Sistemi ve Mockup'lar | `feature/phase-2-design-system` | ✅ |
+| 3 | Proje İskeleti ve Temel Mimari | `feature/phase-3-skeleton` | ✅ |
+| 4 | Veri Modeli ve Yerel Depolama | `feature/phase-4-data-model` | ✅ |
+| 5 | Ana Ekran: Kayıt Butonu ve Ses Kaydı | `feature/phase-5-recording` | ✅ |
+| 6 | Renk ve Metin Ekleme Akışı | `feature/phase-6-color-text-flow` | ✅ |
 
 ---
 
-## Teslim Edilenler
-
-- `docs/Mirildan_PRD_v1.0.docx` — Ürün tanımı, özellikler, kullanıcı akışları
-- `docs/Mirildan_Teknik_Karar_Dokumani_v1.0.docx` — Stack, paketler, mimari
-- `CLAUDE.md` — Proje kuralları ve konvensiyonları
-- `CURRENT_PHASE.md` — Bu dosya
-- `README.md` — Proje genel tanıtımı
+| 7 | Kayıt Listesi, Oynatma ve Filtreleme | `feature/phase-7-list-playback` | ✅ |
+| 8 | Galaxy Görünümü | `feature/phase-8-galaxy` | ✅ |
 
 ---
 
-## Sıradaki Aşama: Aşama 2 — Tasarım Sistemi ve Mockup'lar
+## Sıradaki Aşama: Aşama 9 — Onboarding ve Hesap Sistemi
 
-**Neden şimdi tasarım?**
+**Durum:** Bekliyor (kullanıcı onayı bekleniyor)
+**Branch:** `feature/phase-9-onboarding` (henüz açılmadı)
 
-Kod yazmadan önce uygulamanın nasıl görüneceğini netleştirmek, sonradan büyük değişiklik yapma riskini azaltır. Tasarım sistemi bir kez kurulunca tüm geliştirme hızlanır.
+### Yapılacaklar
 
-**Aşama 2'nin Tahmini Çıktıları:**
-
-- [ ] Renk paleti (hex kodlar)
-- [ ] Tipografi sistemi
-- [ ] Tema tokenları (koyu galaxy, beyaz minimal, vs.)
-- [ ] Temel bileşen stilleri (buton, kart, input)
-- [ ] 5-7 ana ekranın wireframe/mockup'ı:
-  - Onboarding 3 ekranı
-  - Ana ekran (galaxy boş ve dolu hali)
-  - Kayıt oluşturma ekranı
-  - Renk seçim ekranı
-  - Kayıt detay ekranı
-  - Ayarlar ekranı
-- [ ] Animasyon stratejisi belgesi
-- [ ] İkon setinin belirlenmesi
-
-**Yaklaşım:** Ben bu aşamada sana ya Figma-benzeri detaylı wireframe'ler hazırlayacağım (HTML/SVG olarak gösterilebilir), ya da kodda doğrudan tasarım sistemini kurup Flutter'da örnek ekranlar yapabilirim. Kullanıcıya sorulacak.
-
----
-
-## Notlar
-
-Aşama 1'in kullanıcı onayından sonra:
-1. GitHub repo'su açılır (`mirildan` adıyla)
-2. Flutter projesi oluşturulur (`flutter create`)
-3. Dokümanlar `docs/` klasörüne taşınır
-4. İlk commit yapılır
-5. `develop` branch'i oluşturulur
-6. `feature/phase-2-design-system` branch'i açılır
+- [ ] Onboarding ekranları (3 sayfa)
+- [ ] Firebase Auth — Google + Apple + Email girişi
+- [ ] Hesap oluşturma / giriş akışı
+- [ ] Misafir mod (hesapsız kullanım)

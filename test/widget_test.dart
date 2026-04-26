@@ -1,9 +1,10 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mirildan/mockup_app.dart';
+import 'package:mirildan/app.dart';
 
 void main() {
-  testWidgets('MockupApp renders', (WidgetTester tester) async {
-    await tester.pumpWidget(const MockupApp());
-    expect(find.text('Mırıldan Mockuplar'), findsOneWidget);
+  testWidgets('MiriildanApp renders without crash', (tester) async {
+    await tester.pumpWidget(const ProviderScope(child: MiriildanApp()));
+    expect(find.byType(MiriildanApp), findsOneWidget);
   });
 }

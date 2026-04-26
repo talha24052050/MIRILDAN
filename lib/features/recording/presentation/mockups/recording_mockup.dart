@@ -41,9 +41,9 @@ class _RecordingMockupState extends State<RecordingMockup>
   void _onRecordEnd() {
     setState(() => _isRecording = false);
     _pulseController.stop();
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const ColorPickerMockup()),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (_) => const ColorPickerMockup()));
   }
 
   @override
@@ -115,6 +115,37 @@ class _WaveformPlaceholder extends StatelessWidget {
   const _WaveformPlaceholder({required this.isRecording});
   final bool isRecording;
 
+  static const _waveHeights = [
+    16.0,
+    24.0,
+    40.0,
+    32.0,
+    56.0,
+    48.0,
+    64.0,
+    48.0,
+    72.0,
+    56.0,
+    40.0,
+    64.0,
+    48.0,
+    32.0,
+    56.0,
+    40.0,
+    72.0,
+    64.0,
+    48.0,
+    56.0,
+    40.0,
+    32.0,
+    48.0,
+    24.0,
+    40.0,
+    32.0,
+    16.0,
+    8.0,
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -123,13 +154,7 @@ class _WaveformPlaceholder extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: List.generate(28, (i) {
-          final heights = [
-            16.0, 24.0, 40.0, 32.0, 56.0, 48.0, 64.0, 48.0,
-            72.0, 56.0, 40.0, 64.0, 48.0, 32.0, 56.0, 40.0,
-            72.0, 64.0, 48.0, 56.0, 40.0, 32.0, 48.0, 24.0,
-            40.0, 32.0, 16.0, 8.0,
-          ];
-          final h = isRecording ? heights[i] : 4.0;
+          final h = isRecording ? _waveHeights[i] : 4.0;
           return AnimatedContainer(
             duration: Duration(milliseconds: 200 + i * 10),
             curve: Curves.easeInOut,
@@ -321,8 +346,4 @@ class _ColorGrid extends StatelessWidget {
       }).toList(),
     );
   }
-}
-
-class AppRadius {
-  static const double md = 12.0;
 }

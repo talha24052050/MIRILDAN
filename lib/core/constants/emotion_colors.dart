@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
-enum EmotionColor {
-  yellow,
-  blue,
-  red,
-  green,
-  purple,
-  gray,
-  pink,
-  orange,
-}
+enum EmotionColor { yellow, blue, red, green, purple, gray, pink, orange }
 
 extension EmotionColorExtension on EmotionColor {
   Color get color {

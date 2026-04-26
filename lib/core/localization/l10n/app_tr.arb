@@ -1,0 +1,67 @@
+{
+  "@@locale": "tr",
+
+  "appName": "Mırıldan",
+
+  "onboarding1Title": "Mırıldan'a\nHoş Geldin.",
+  "onboarding1Subtitle": "Duygularını yakala, takip etme.",
+  "onboarding2Title": "Konuş ya da yaz,\nbir renk seç.",
+  "onboarding2Subtitle": "Her şey senin tempondan, sen istediğinde.",
+  "onboarding3Title": "Her şey senin\nkontrolünde.",
+  "onboarding3Subtitle": "Kayıtların sadece senin cihazında.\nHesap açmak isteğe bağlı.",
+  "onboardingContinue": "Devam",
+  "onboardingStart": "Başla",
+  "onboardingCreateAccount": "Hesap Oluştur",
+  "onboardingSkip": "Şimdi değil",
+
+  "galaxyEmpty": "İlk fısıltını bırak...",
+  "galaxyEmptySubtitle": "Bir şeyler hissediyorsan buradayız.",
+
+  "recordHold": "Konuşmak için basılı tut",
+  "recordWrite": "Yaz",
+  "recordShuffle": "Karıştır",
+  "recordColorTitle": "Bu an nasıl hissettiriyor?",
+  "recordAddNote": "Bir not eklemek ister misin?",
+  "recordNoteHint": "İsteğe bağlı...",
+  "recordSave": "Kaydet",
+  "recordCancel": "İptal",
+
+  "emotionYellow": "Enerji",
+  "emotionBlue": "Sakin",
+  "emotionRed": "Öfke",
+  "emotionGreen": "Huzur",
+  "emotionPurple": "Düşünceli",
+  "emotionGray": "Boş",
+  "emotionPink": "Sevgi",
+  "emotionOrange": "Heyecan",
+
+  "notifMissed7Days": "Seni özledik. Bir şeyler bırakmak ister misin?",
+  "notifMissed30Days": "Mırıldan hala burada. Ne zaman istersen döneriz.",
+
+  "settingsTitle": "Ayarlar",
+  "settingsTheme": "Tema",
+  "settingsLanguage": "Dil",
+  "settingsDateFormat": "Tarih Gösterimi",
+  "settingsNotifications": "Bildirimler",
+  "settingsAccount": "Hesap",
+  "settingsExport": "Verileri Dışa Aktar",
+  "settingsDeleteAll": "Tüm Verileri Sil",
+  "settingsAbout": "Hakkında",
+
+  "themeDarkGalaxy": "Koyu Galaxy",
+  "themeGradientNight": "Gradient Gece",
+  "themeWhiteMinimal": "Beyaz Minimal",
+  "themePaper": "Kağıt",
+
+  "dateFormatRelative": "Göreceli",
+  "dateFormatExact": "Kesin",
+  "dateFormatMonthOnly": "Ay Bazlı",
+
+  "cancel": "İptal",
+  "confirm": "Onayla",
+  "delete": "Sil",
+  "share": "Paylaş",
+  "changeColor": "Rengi Değiştir",
+  "noAccountLabel": "Giriş yapılmadı",
+  "appVersion": "Mırıldan v1.0"
+}

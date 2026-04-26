@@ -64,15 +64,9 @@ class GalaxyMockup extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      _IconButton(
-                        icon: Icons.tune_rounded,
-                        onTap: () {},
-                      ),
+                      _IconButton(icon: Icons.tune_rounded, onTap: () {}),
                       const SizedBox(width: AppSpacing.sm),
-                      _IconButton(
-                        icon: Icons.settings_outlined,
-                        onTap: () {},
-                      ),
+                      _IconButton(icon: Icons.settings_outlined, onTap: () {}),
                     ],
                   ),
                 ],
@@ -81,12 +75,7 @@ class GalaxyMockup extends StatelessWidget {
           ),
 
           // Alt kayıt butonları
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: _BottomRecordBar(),
-          ),
+          Positioned(bottom: 0, left: 0, right: 0, child: _BottomRecordBar()),
         ],
       ),
     );
@@ -96,12 +85,13 @@ class GalaxyMockup extends StatelessWidget {
 class _StarField extends StatelessWidget {
   const _StarField();
 
+  static final _rng = Random(42);
+
   @override
   Widget build(BuildContext context) {
-    final rng = Random(42);
     return CustomPaint(
       size: MediaQuery.of(context).size,
-      painter: _StarPainter(rng),
+      painter: _StarPainter(_rng),
     );
   }
 }
@@ -210,9 +200,10 @@ class _PulsingDotState extends State<_PulsingDot>
       vsync: this,
       duration: const Duration(milliseconds: 1800),
     )..repeat(reverse: true);
-    _animation = Tween<double>(begin: 0.4, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _animation = Tween<double>(
+      begin: 0.4,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -329,15 +320,12 @@ class _IconButton extends StatelessWidget {
           shape: BoxShape.circle,
           color: AppColors.darkSurfaceVariant,
         ),
-        child: Icon(icon, color: AppColors.darkOnSurface, size: AppSize.iconSizeMd),
+        child: Icon(
+          icon,
+          color: AppColors.darkOnSurface,
+          size: AppSize.iconSizeMd,
+        ),
       ),
     );
   }
-}
-
-// Sabit referanslar — magic number yerine
-class AppSize {
-  static const double recordButtonSize = 80.0;
-  static const double iconSizeMd = 24.0;
-  static const double iconSizeLg = 32.0;
 }
