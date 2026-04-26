@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/galaxy/presentation/galaxy_screen.dart';
 import '../../features/list_view/presentation/list_view_screen.dart';
 import '../../features/recording/presentation/color_picker_screen.dart';
 import '../../features/recording/presentation/recording_screen.dart';
@@ -20,7 +21,7 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.galaxy,
       name: 'galaxy',
-      builder: (context, state) => const _PlaceholderScreen(title: 'Galaxy'),
+      builder: (context, state) => const GalaxyScreen(),
     ),
     GoRoute(
       path: AppRoutes.record,

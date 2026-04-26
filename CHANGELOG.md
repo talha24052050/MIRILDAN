@@ -7,6 +7,22 @@ Format: [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/)
 
 ## [Unreleased]
 
+## Aşama 8 — Galaxy Görünümü
+
+**Branch:** `feature/phase-8-galaxy` | **Tarih:** Nisan 2026
+
+### Eklendi
+- `lib/features/galaxy/providers/galaxy_providers.dart` — `GalaxyFilter` (renk/tip filtresi) ve `galaxyEntries` (filtreli kayıt listesi) provider'ları
+- `lib/features/galaxy/presentation/galaxy_painter.dart` — `GalaxyPainter` (`CustomPainter`): Fibonacci spiral algoritmasıyla noktaları yerleştirir, glow + halo efektleri
+- `lib/features/galaxy/presentation/galaxy_screen.dart` — Tam ekran galaksi görünümü: `InteractiveViewer` ile zoom/pan, nokta tap → detay sheet, boş durum, kayıt butonu
+- `lib/features/galaxy/presentation/widgets/entry_detail_sheet.dart` — Kayıt detay bottom sheet: renk etiketi, tarih, içerik, ses süresi, silme akışı
+- `test/features/galaxy/galaxy_test.dart` — 9 widget testi (GalaxyScreen × 4, EntryDetailSheet × 4)
+
+### Değişti
+- `app_router.dart`: Galaxy route `_PlaceholderScreen` → `GalaxyScreen`
+
+---
+
 ## Aşama 7 — Kayıt Listesi, Oynatma ve Filtreleme
 
 **Branch:** `feature/phase-7-list-playback` | **Tarih:** Nisan 2026

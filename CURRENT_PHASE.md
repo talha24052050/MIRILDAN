@@ -14,17 +14,18 @@
 ---
 
 | 7 | Kayıt Listesi, Oynatma ve Filtreleme | `feature/phase-7-list-playback` | ✅ |
+| 8 | Galaxy Görünümü | `feature/phase-8-galaxy` | ✅ |
 
 ---
 
-## Sıradaki Aşama: Aşama 8 — Galaxy Görünümü
+## Sıradaki Aşama: Aşama 9 — Onboarding ve Hesap Sistemi
 
 **Durum:** Bekliyor (kullanıcı onayı bekleniyor)
-**Branch:** `feature/phase-8-galaxy` (henüz açılmadı)
+**Branch:** `feature/phase-9-onboarding` (henüz açılmadı)
 
 ### Yapılacaklar
 
-- [ ] Galaxy canvas — kayıtlar renkli noktalar olarak görünür
-- [ ] Noktalara dokunma — kayıt detayı açılır
-- [ ] Animasyon ve parçacık efektleri
-- [ ] 60 FPS performans hedefi
+- [ ] Onboarding ekranları (3 sayfa)
+- [ ] Firebase Auth — Google + Apple + Email girişi
+- [ ] Hesap oluşturma / giriş akışı
+- [ ] Misafir mod (hesapsız kullanım)
