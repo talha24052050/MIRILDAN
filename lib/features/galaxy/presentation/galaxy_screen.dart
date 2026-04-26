@@ -28,6 +28,8 @@ class _GalaxyScreenState extends ConsumerState<GalaxyScreen>
   late final AnimationController _pulseController;
   GalaxyPainter? _lastPainter;
 
+  GoRouter? _router;
+
   @override
   void initState() {
     super.initState();
@@ -35,10 +37,24 @@ class _GalaxyScreenState extends ConsumerState<GalaxyScreen>
       vsync: this,
       duration: const Duration(milliseconds: 1500),
     )..repeat(reverse: true);
+    // Context hazır olunca router listener'ı kaydet (test ortamında GoRouter olmayabilir)
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _router = GoRouter.maybeOf(context);
+      _router?.routerDelegate.addListener(_onRouteChange);
+    });
+  }
+
+  void _onRouteChange() {
+    final location =
+        _router?.routerDelegate.currentConfiguration.uri.path ?? '';
+    if (location == AppRoutes.galaxy && mounted) {
+      ref.invalidate(galaxyEntriesProvider);
+    }
   }
 
   @override
   void dispose() {
+    _router?.routerDelegate.removeListener(_onRouteChange);
     _transformController.dispose();
     _pulseController.dispose();
     super.dispose();
