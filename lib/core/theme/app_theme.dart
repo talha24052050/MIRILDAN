@@ -10,48 +10,48 @@ class AppTheme {
   AppTheme._();
 
   static ThemeData darkGalaxy() => _build(
-        brightness: Brightness.dark,
-        background: AppColors.darkBackground,
-        surface: AppColors.darkSurface,
-        surfaceVariant: AppColors.darkSurfaceVariant,
-        onSurface: AppColors.darkOnSurface,
-        onSurfaceVariant: AppColors.darkOnSurfaceVariant,
-        divider: AppColors.darkDivider,
-        systemUiOverlay: SystemUiOverlayStyle.light,
-      );
+    brightness: Brightness.dark,
+    background: AppColors.darkBackground,
+    surface: AppColors.darkSurface,
+    surfaceVariant: AppColors.darkSurfaceVariant,
+    onSurface: AppColors.darkOnSurface,
+    onSurfaceVariant: AppColors.darkOnSurfaceVariant,
+    divider: AppColors.darkDivider,
+    systemUiOverlay: SystemUiOverlayStyle.light,
+  );
 
   static ThemeData gradientNight() => _build(
-        brightness: Brightness.dark,
-        background: AppColors.gradientStart,
-        surface: const Color(0xFF12103A),
-        surfaceVariant: const Color(0xFF1E1B4B),
-        onSurface: AppColors.darkOnSurface,
-        onSurfaceVariant: AppColors.darkOnSurfaceVariant,
-        divider: const Color(0xFF1E1B4B),
-        systemUiOverlay: SystemUiOverlayStyle.light,
-      );
+    brightness: Brightness.dark,
+    background: AppColors.gradientStart,
+    surface: const Color(0xFF12103A),
+    surfaceVariant: const Color(0xFF1E1B4B),
+    onSurface: AppColors.darkOnSurface,
+    onSurfaceVariant: AppColors.darkOnSurfaceVariant,
+    divider: const Color(0xFF1E1B4B),
+    systemUiOverlay: SystemUiOverlayStyle.light,
+  );
 
   static ThemeData whiteMinimal() => _build(
-        brightness: Brightness.light,
-        background: AppColors.lightBackground,
-        surface: AppColors.lightSurface,
-        surfaceVariant: AppColors.lightSurfaceVariant,
-        onSurface: AppColors.lightOnSurface,
-        onSurfaceVariant: AppColors.lightOnSurfaceVariant,
-        divider: AppColors.lightDivider,
-        systemUiOverlay: SystemUiOverlayStyle.dark,
-      );
+    brightness: Brightness.light,
+    background: AppColors.lightBackground,
+    surface: AppColors.lightSurface,
+    surfaceVariant: AppColors.lightSurfaceVariant,
+    onSurface: AppColors.lightOnSurface,
+    onSurfaceVariant: AppColors.lightOnSurfaceVariant,
+    divider: AppColors.lightDivider,
+    systemUiOverlay: SystemUiOverlayStyle.dark,
+  );
 
   static ThemeData paper() => _build(
-        brightness: Brightness.light,
-        background: AppColors.paperBackground,
-        surface: AppColors.paperSurface,
-        surfaceVariant: AppColors.paperSurfaceVariant,
-        onSurface: AppColors.paperOnSurface,
-        onSurfaceVariant: AppColors.paperOnSurfaceVariant,
-        divider: AppColors.paperSurfaceVariant,
-        systemUiOverlay: SystemUiOverlayStyle.dark,
-      );
+    brightness: Brightness.light,
+    background: AppColors.paperBackground,
+    surface: AppColors.paperSurface,
+    surfaceVariant: AppColors.paperSurfaceVariant,
+    onSurface: AppColors.paperOnSurface,
+    onSurfaceVariant: AppColors.paperOnSurfaceVariant,
+    divider: AppColors.paperSurfaceVariant,
+    systemUiOverlay: SystemUiOverlayStyle.dark,
+  );
 
   static ThemeData _build({
     required Brightness brightness,

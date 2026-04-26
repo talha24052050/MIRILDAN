@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'core/constants/app_colors.dart';
 import 'core/theme/app_theme.dart';
 import 'features/onboarding/presentation/mockups/onboarding_mockup.dart';
 import 'features/galaxy/presentation/mockups/galaxy_mockup.dart';
@@ -33,7 +34,7 @@ class MockupMenu extends StatelessWidget {
           _MockupTile(
             title: 'Onboarding (3 ekran)',
             subtitle: 'İlk açılış akışı',
-            color: const Color(0xFF9B72CF),
+            color: AppColors.emotionPurple,
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => const OnboardingMockup()),
@@ -42,7 +43,7 @@ class MockupMenu extends StatelessWidget {
           _MockupTile(
             title: 'Galaxy — Dolu',
             subtitle: 'Kayıtlar olan ana ekran',
-            color: const Color(0xFF4A90D9),
+            color: AppColors.emotionBlue,
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => const GalaxyMockup()),
@@ -51,7 +52,7 @@ class MockupMenu extends StatelessWidget {
           _MockupTile(
             title: 'Galaxy — Boş',
             subtitle: 'Henüz kayıt yok hali',
-            color: const Color(0xFF7C6AF7),
+            color: AppColors.accent,
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
@@ -62,7 +63,7 @@ class MockupMenu extends StatelessWidget {
           _MockupTile(
             title: 'Ses Kaydı + Renk Seçimi',
             subtitle: 'Kayıt oluşturma akışı',
-            color: const Color(0xFFE05C5C),
+            color: AppColors.emotionRed,
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => const RecordingMockup()),
@@ -71,7 +72,7 @@ class MockupMenu extends StatelessWidget {
           _MockupTile(
             title: 'Ayarlar',
             subtitle: 'Tema, dil, bildirim ayarları',
-            color: const Color(0xFF6BCB77),
+            color: AppColors.emotionGreen,
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (_) => const SettingsMockup()),
