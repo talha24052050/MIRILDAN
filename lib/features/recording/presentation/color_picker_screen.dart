@@ -221,6 +221,7 @@ class _ColorGrid extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       crossAxisSpacing: AppSpacing.md,
       mainAxisSpacing: AppSpacing.md,
+      childAspectRatio: 0.85,
       children: EmotionColor.values.map((e) {
         final isSelected = selected == e;
         return GestureDetector(
