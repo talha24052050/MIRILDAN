@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/list_view/presentation/list_view_screen.dart';
 import '../../features/recording/presentation/color_picker_screen.dart';
 import '../../features/recording/presentation/recording_screen.dart';
 
@@ -29,12 +30,27 @@ final appRouter = GoRouter(
         GoRoute(
           path: AppRoutes.colorPickerRelative,
           name: 'colorPicker',
-          builder: (context, state) {
+          pageBuilder: (context, state) {
             final extra = state.extra as Map<String, dynamic>? ?? {};
-            return ColorPickerScreen(
-              audioPath: extra['audioPath'] as String?,
-              audioDurationMs: extra['durationMs'] as int?,
-              text: extra['text'] as String?,
+            return CustomTransitionPage(
+              key: state.pageKey,
+              child: ColorPickerScreen(
+                audioPath: extra['audioPath'] as String?,
+                audioDurationMs: extra['durationMs'] as int?,
+                text: extra['text'] as String?,
+              ),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                    return SlideTransition(
+                      position: animation.drive(
+                        Tween(
+                          begin: const Offset(0, 1),
+                          end: Offset.zero,
+                        ).chain(CurveTween(curve: Curves.easeOutCubic)),
+                      ),
+                      child: child,
+                    );
+                  },
             );
           },
         ),
@@ -51,7 +67,7 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.listView,
       name: 'listView',
-      builder: (context, state) => const _PlaceholderScreen(title: 'Liste'),
+      builder: (context, state) => const ListViewScreen(),
     ),
     GoRoute(
       path: AppRoutes.settings,

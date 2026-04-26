@@ -7,6 +7,8 @@ import '../../../core/constants/app_spacing.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/constants/app_text_styles.dart';
 import '../../../core/router/app_router.dart';
+import '../../../core/utils/duration_formatter.dart';
+import '../../../core/widgets/confirm_dialog.dart';
 import '../domain/recording_state.dart';
 import '../providers/recording_providers.dart';
 import 'widgets/record_button.dart';
@@ -34,7 +36,6 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
   }
 
   Future<void> _handleRecordEnd() async {
-    // GoRouter referansını async gap öncesinde yakala
     final router = GoRouter.of(context);
     final controller = ref.read(recordingControllerProvider.notifier);
     final path = await controller.stopRecording();
@@ -57,11 +58,41 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
     context.push(AppRoutes.colorPicker, extra: {'text': text});
   }
 
+  Future<void> _handleClose() async {
+    final state = ref.read(recordingControllerProvider);
+    final isCurrentlyRecording = state is RecordingInProgress;
+
+    if (isCurrentlyRecording) {
+      final confirmed = await showConfirmDialog(
+        context: context,
+        title: AppStrings.recordCancelConfirmTitle,
+        body: AppStrings.recordCancelConfirmBodyAudio,
+        cancelLabel: AppStrings.recordCancelConfirmNo,
+        confirmLabel: AppStrings.recordCancelConfirmYes,
+      );
+      if (!mounted || !confirmed) return;
+      await ref.read(recordingControllerProvider.notifier).cancelRecording();
+    } else if (_textMode && _textController.text.trim().isNotEmpty) {
+      final confirmed = await showConfirmDialog(
+        context: context,
+        title: AppStrings.recordCancelConfirmTitle,
+        body: AppStrings.recordCancelConfirmBodyText,
+        cancelLabel: AppStrings.recordCancelConfirmNo,
+        confirmLabel: AppStrings.recordCancelConfirmYes,
+      );
+      if (!mounted || !confirmed) return;
+    }
+
+    if (mounted) {
+      final router = GoRouter.of(context);
+      if (router.canPop()) router.pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(recordingControllerProvider);
 
-    // İzin reddedildiyse otomatik metin moduna geç
     ref.listen(recordingControllerProvider, (_, next) {
       if (next is RecordingPermissionDenied && !_textMode) {
         setState(() => _textMode = true);
@@ -73,43 +104,42 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
     final amplitude = activeRecording?.amplitude ?? 0.0;
     final elapsed = activeRecording?.elapsed ?? Duration.zero;
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
-      appBar: AppBar(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) async {
+        if (didPop) return;
+        await _handleClose();
+      },
+      child: Scaffold(
         backgroundColor: AppColors.darkBackground,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.close, color: AppColors.darkOnSurface),
-          onPressed: () async {
-            final router = GoRouter.of(context);
-            if (isRecording) {
-              await ref
-                  .read(recordingControllerProvider.notifier)
-                  .cancelRecording();
-            }
-            if (mounted) router.pop();
-          },
-        ),
-        actions: [
-          if (!isRecording)
-            TextButton(
-              onPressed: () => setState(() => _textMode = !_textMode),
-              child: Text(
-                _textMode
-                    ? AppStrings.recordSwitchToAudio
-                    : AppStrings.recordWrite,
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.accent,
+        appBar: AppBar(
+          backgroundColor: AppColors.darkBackground,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.close, color: AppColors.darkOnSurface),
+            onPressed: _handleClose,
+          ),
+          actions: [
+            if (!isRecording)
+              TextButton(
+                onPressed: () => setState(() => _textMode = !_textMode),
+                child: Text(
+                  _textMode
+                      ? AppStrings.recordSwitchToAudio
+                      : AppStrings.recordWrite,
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: AppColors.accent,
+                  ),
                 ),
               ),
-            ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
-        child: _textMode
-            ? _buildTextMode()
-            : _buildAudioMode(isRecording, amplitude, elapsed, state),
+          ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+          child: _textMode
+              ? _buildTextMode()
+              : _buildAudioMode(isRecording, amplitude, elapsed, state),
+        ),
       ),
     );
   }
@@ -130,7 +160,7 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
           opacity: isRecording ? 1.0 : 0.0,
           duration: const Duration(milliseconds: 200),
           child: Text(
-            _formatDuration(elapsed),
+            DurationFormatter.format(elapsed),
             style: AppTextStyles.displayMedium.copyWith(
               color: AppColors.darkOnSurface,
             ),
@@ -187,6 +217,17 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
             contentPadding: const EdgeInsets.all(AppSpacing.md),
           ),
           maxLines: 6,
+          maxLength: AppStrings.recordTextMaxLength,
+          buildCounter:
+              (context, {required currentLength, required isFocused, maxLength}) =>
+                  Text(
+                    '$currentLength / $maxLength',
+                    style: AppTextStyles.labelSmall.copyWith(
+                      color: currentLength >= maxLength!
+                          ? AppColors.error
+                          : AppColors.darkOnSurfaceVariant,
+                    ),
+                  ),
           autofocus: true,
         ),
         const Spacer(),
@@ -200,11 +241,5 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
         const SizedBox(height: AppSpacing.xxl),
       ],
     );
-  }
-
-  String _formatDuration(Duration d) {
-    final m = d.inMinutes.remainder(60).toString();
-    final s = d.inSeconds.remainder(60).toString().padLeft(2, '0');
-    return '$m:$s';
   }
 }

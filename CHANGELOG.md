@@ -7,6 +7,51 @@ Format: [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/)
 
 ## [Unreleased]
 
+## Aşama 7 — Kayıt Listesi, Oynatma ve Filtreleme
+
+**Branch:** `feature/phase-7-list-playback` | **Tarih:** Nisan 2026
+
+### Eklendi
+- `lib/features/list_view/data/audio_player_service.dart` — `AudioPlayerService` soyut arayüzü + `JustAudioPlayerService` implementasyonu (`positionStream`, `playingStream`, `processingStateStream`)
+- `lib/features/list_view/providers/list_view_providers.dart` — `EntryListFilter`, `filteredEntries`, `audioPlayerService`, `PlayerNotifier` provider'ları
+- `lib/features/list_view/presentation/list_view_screen.dart` — tarih gruplu kayıt listesi, boş/hata durumları, oynatıcı durduğunda liste güncellemesi (`ref.listen`)
+- `lib/features/list_view/presentation/widgets/entry_list_tile.dart` — `Dismissible` tile, oynatma ikonu, renk noktası
+- `lib/features/list_view/presentation/widgets/date_group_header.dart` — Türkçe tarih başlıkları (Bugün/Dün/tarih)
+- `lib/features/list_view/presentation/widgets/filter_bar.dart` — yatay renk ve tip filtre chip'leri
+- `lib/features/list_view/presentation/widgets/mini_player_bar.dart` — alt oynatma çubuğu, progress slider, ayrı `StreamBuilder<bool>` play/pause ikonu için
+- `lib/core/utils/duration_formatter.dart` — paylaşımlı süre formatlayıcı (`DurationFormatter.format`)
+- `lib/core/widgets/confirm_dialog.dart` — paylaşımlı onay diyalogu (`showConfirmDialog`)
+- `lib/core/router/app_router.dart`: `/list` → `ListViewScreen` rotası eklendi
+- `test/features/list_view/list_view_test.dart` — 12 widget testi (ListViewScreen, FilterBar, EntryListTile)
+
+### Değişti
+- `RecordingScreen`: `_formatDuration` → `DurationFormatter.format`, `_showCancelDialog` → `showConfirmDialog`
+- `ColorPickerScreen`: `_showCancelDialog` → `showConfirmDialog`, double `.trim()` düzeltildi
+- `AppStrings`: liste görünümü string'leri eklendi
+
+---
+
+## Aşama 6 — Renk ve Metin Ekleme Akışı
+
+**Branch:** `feature/phase-6-color-text-flow` | **Tarih:** Nisan 2026
+
+### Eklendi
+- `AppStrings`: iptal onay diyalogu string'leri (`recordCancelConfirmTitle/Body*/Yes/No`), `recordSaveError`, `recordTextMaxLength` (280)
+- `RecordingScreen`: metin moduna 280 karakterlik sayaç (`buildCounter`)
+- `RecordingScreen`: kayıt/metin iptal akışında onay diyalogu (`PopScope` + AppBar X butonu)
+- `ColorPickerScreen`: renk seçiminde haptic feedback (`HapticFeedback.selectionClick()`)
+- `ColorPickerScreen`: geri/İptal butonunda onay diyalogu (`PopScope` dahil)
+- `ColorPickerScreen`: body `SingleChildScrollView`'a sarıldı — küçük ekranlarda scroll desteği
+- `app_router.dart`: ColorPickerScreen geçişi `CustomTransitionPage` + slide-up animasyonu
+- `test/features/recording/color_picker_screen_test.dart` — 6 yeni widget testi
+- `test/features/recording/recording_screen_test.dart` — 5 yeni widget testi (toplam 10'a çıktı)
+
+### Değişti
+- `RecordingScreen._handleClose`: GoRouter çağrısı erken return'lerden sonraya taşındı (`canPop()` kontrolü eklendi)
+- `ColorPickerScreen._cancel`: `canPop()` kontrolü eklendi, ses dosyası async delete güvenliği düzeltildi
+
+---
+
 ## Aşama 5 — Ana Ekran: Kayıt Butonu ve Ses Kaydı
 
 **Branch:** `feature/phase-5-recording` | **Tarih:** Nisan 2026

@@ -36,6 +36,34 @@ class AppStrings {
   static const String recordCancel = 'İptal';
   static const String recordPermissionDenied =
       'Mikrofon izni verilmedi. Metin olarak kaydet.';
+  static const String recordSaveError = 'Bir sorun oluştu, tekrar dener misin?';
+  static const int recordTextMaxLength = 280;
+
+  // İptal onay diyalogu
+  static const String recordCancelConfirmTitle = 'Kaydı iptal et?';
+  static const String recordCancelConfirmBodyAudio =
+      'Bu ses kaydı silinecek. Emin misin?';
+  static const String recordCancelConfirmBodyText =
+      'Yazdıkların silinecek. Emin misin?';
+  static const String recordCancelConfirmBodyColorPicker =
+      'Bu an kaydedilmeyecek. Emin misin?';
+  static const String recordCancelConfirmYes = 'Evet, iptal et';
+  static const String recordCancelConfirmNo = 'Hayır, devam et';
+
+  // Liste görünümü
+  static const String listViewTitle = 'Kayıtlar';
+  static const String listViewEmpty = 'Henüz kayıt yok.';
+  static const String listViewEmptySubtitle = 'Ne zaman istersen buradayız.';
+  static const String listViewFilterAll = 'Tümü';
+  static const String listViewFilterAudio = 'Ses';
+  static const String listViewFilterText = 'Metin';
+  static const String listViewFilterMixed = 'Karma';
+  static const String listViewDeleteTitle = 'Bu kaydı sil?';
+  static const String listViewDeleteBody = 'Bu işlem geri alınamaz.';
+  static const String listViewDeleteConfirm = 'Evet, sil';
+  static const String listViewDeleteCancel = 'Vazgeç';
+  static const String listViewToday = 'Bugün';
+  static const String listViewYesterday = 'Dün';
 
   // Bildirimler
   static const String notifMissed7Days =

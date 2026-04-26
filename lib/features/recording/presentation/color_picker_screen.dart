@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_colors.dart';
@@ -7,6 +8,7 @@ import '../../../core/constants/app_strings.dart';
 import '../../../core/constants/app_text_styles.dart';
 import '../../../core/constants/emotion_colors.dart';
 import '../../../core/router/app_router.dart';
+import '../../../core/widgets/confirm_dialog.dart';
 import '../../../data/models/entry.dart';
 import '../../../data/repositories/entry_repository.dart';
 import '../../../data/services/audio_file_service.dart';
@@ -45,12 +47,11 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
     if (_selected == null || _saving) return;
     setState(() => _saving = true);
 
-    // GoRouter'ı async gap öncesinde yakala
     final router = GoRouter.of(context);
 
     try {
-      // EmotionColor → EntryColor: index yerine name bazlı, enum sırası değişse bile güvenli
       final entryColor = EntryColor.values.byName(_selected!.name);
+      final note = _noteController.text.trim();
 
       final entry = Entry(
         id: 0,
@@ -60,9 +61,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
         audioPath: widget.audioPath,
         audioDurationMs: widget.audioDurationMs,
         text: widget.text,
-        note: _noteController.text.trim().isEmpty
-            ? null
-            : _noteController.text.trim(),
+        note: note.isEmpty ? null : note,
       );
 
       await EntryRepository().insert(entry);
@@ -73,18 +72,30 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
       if (!mounted) return;
       setState(() => _saving = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Kaydedilemedi, tekrar dene.')),
+        SnackBar(
+          content: Text(AppStrings.recordSaveError),
+          backgroundColor: AppColors.darkSurface,
+        ),
       );
     }
   }
 
   Future<void> _cancel() async {
-    final router = GoRouter.of(context);
+    final confirmed = await showConfirmDialog(
+      context: context,
+      title: AppStrings.recordCancelConfirmTitle,
+      body: AppStrings.recordCancelConfirmBodyColorPicker,
+      cancelLabel: AppStrings.recordCancelConfirmNo,
+      confirmLabel: AppStrings.recordCancelConfirmYes,
+    );
+    if (!mounted || !confirmed) return;
+
     if (widget.audioPath != null) {
       await AudioFileService.delete(widget.audioPath!);
     }
     if (!mounted) return;
-    router.pop();
+    final router = GoRouter.of(context);
+    if (router.canPop()) router.pop();
   }
 
   EntryType _resolveType() {
@@ -95,91 +106,101 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
-      appBar: AppBar(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) async {
+        if (didPop) return;
+        if (!_saving) await _cancel();
+      },
+      child: Scaffold(
         backgroundColor: AppColors.darkBackground,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.darkOnSurface),
-          onPressed: _saving ? null : _cancel,
+        appBar: AppBar(
+          backgroundColor: AppColors.darkBackground,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: AppColors.darkOnSurface),
+            onPressed: _saving ? null : _cancel,
+          ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(AppSpacing.xl),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              AppStrings.recordColorTitle,
-              style: AppTextStyles.headlineLarge.copyWith(
-                color: AppColors.darkOnSurface,
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(AppSpacing.xl),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                AppStrings.recordColorTitle,
+                style: AppTextStyles.headlineLarge.copyWith(
+                  color: AppColors.darkOnSurface,
+                ),
               ),
-            ),
-            const SizedBox(height: AppSpacing.xxl),
-            _ColorGrid(
-              selected: _selected,
-              onSelect: (c) => setState(() => _selected = c),
-            ),
-            const SizedBox(height: AppSpacing.xl),
-            Text(
-              AppStrings.recordAddNote,
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.darkOnSurfaceVariant,
+              const SizedBox(height: AppSpacing.xxl),
+              _ColorGrid(
+                selected: _selected,
+                onSelect: (c) {
+                  HapticFeedback.selectionClick();
+                  setState(() => _selected = c);
+                },
               ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            TextField(
-              controller: _noteController,
-              style: AppTextStyles.bodyLarge.copyWith(
-                color: AppColors.darkOnSurface,
-              ),
-              decoration: InputDecoration(
-                hintText: AppStrings.recordNoteHint,
-                hintStyle: AppTextStyles.bodyLarge.copyWith(
+              const SizedBox(height: AppSpacing.xl),
+              Text(
+                AppStrings.recordAddNote,
+                style: AppTextStyles.bodyMedium.copyWith(
                   color: AppColors.darkOnSurfaceVariant,
                 ),
-                filled: true,
-                fillColor: AppColors.darkSurfaceVariant,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(AppRadius.md),
-                  borderSide: BorderSide.none,
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              TextField(
+                controller: _noteController,
+                style: AppTextStyles.bodyLarge.copyWith(
+                  color: AppColors.darkOnSurface,
                 ),
-                contentPadding: const EdgeInsets.all(AppSpacing.md),
-              ),
-              maxLines: 3,
-            ),
-            const Spacer(),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: (_selected != null && !_saving) ? _save : null,
-                child: _saving
-                    ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: Colors.white,
-                        ),
-                      )
-                    : Text(AppStrings.recordSave),
-              ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                onPressed: _saving ? null : _cancel,
-                child: Text(
-                  AppStrings.recordCancel,
-                  style: AppTextStyles.bodyMedium.copyWith(
+                decoration: InputDecoration(
+                  hintText: AppStrings.recordNoteHint,
+                  hintStyle: AppTextStyles.bodyLarge.copyWith(
                     color: AppColors.darkOnSurfaceVariant,
+                  ),
+                  filled: true,
+                  fillColor: AppColors.darkSurfaceVariant,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding: const EdgeInsets.all(AppSpacing.md),
+                ),
+                maxLines: 3,
+              ),
+              const SizedBox(height: AppSpacing.xxl),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: (_selected != null && !_saving) ? _save : null,
+                  child: _saving
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : Text(AppStrings.recordSave),
+                ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: _saving ? null : _cancel,
+                  child: Text(
+                    AppStrings.recordCancel,
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: AppColors.darkOnSurfaceVariant,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -208,7 +229,7 @@ class _ColorGrid extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AnimatedContainer(
-                duration: const Duration(milliseconds: 180),
+                duration: Duration(milliseconds: AppDuration.fast),
                 width: isSelected
                     ? AppSize.colorSwatchSizeSelected
                     : AppSize.colorSwatchSize,
