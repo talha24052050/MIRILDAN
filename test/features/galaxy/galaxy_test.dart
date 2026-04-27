@@ -11,21 +11,21 @@ import 'package:mirildan/features/galaxy/providers/galaxy_providers.dart';
 // ── Test verisi ────────────────────────────────────────────────────────────────
 
 Entry _textEntry({int id = 1}) => Entry(
-      id: id,
-      createdAt: DateTime(2024, 6, 1, 14, 30),
-      type: EntryType.text,
-      color: EntryColor.blue,
-      text: 'Bugün çok güzeldi',
-    );
+  id: id,
+  createdAt: DateTime(2024, 6, 1, 14, 30),
+  type: EntryType.text,
+  color: EntryColor.blue,
+  text: 'Bugün çok güzeldi',
+);
 
 Entry _audioEntry({int id = 2}) => Entry(
-      id: id,
-      createdAt: DateTime(2024, 6, 2, 9, 0),
-      type: EntryType.audio,
-      color: EntryColor.red,
-      audioPath: '/fake/audio.m4a',
-      audioDurationMs: 3000,
-    );
+  id: id,
+  createdAt: DateTime(2024, 6, 2, 9, 0),
+  type: EntryType.audio,
+  color: EntryColor.red,
+  audioPath: '/fake/audio.m4a',
+  audioDurationMs: 3000,
+);
 
 // ── Testler ────────────────────────────────────────────────────────────────────
 
@@ -83,9 +83,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            galaxyEntriesProvider.overrideWith(
-              (_) async => [_textEntry()],
-            ),
+            galaxyEntriesProvider.overrideWith((_) async => [_textEntry()]),
           ],
           child: const MaterialApp(home: GalaxyScreen()),
         ),
@@ -115,9 +113,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           child: MaterialApp(
-            home: Scaffold(
-              body: EntryDetailSheet(entry: _textEntry()),
-            ),
+            home: Scaffold(body: EntryDetailSheet(entry: _textEntry())),
           ),
         ),
       );
@@ -130,9 +126,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           child: MaterialApp(
-            home: Scaffold(
-              body: EntryDetailSheet(entry: _audioEntry()),
-            ),
+            home: Scaffold(body: EntryDetailSheet(entry: _audioEntry())),
           ),
         ),
       );
@@ -146,9 +140,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           child: MaterialApp(
-            home: Scaffold(
-              body: EntryDetailSheet(entry: _textEntry()),
-            ),
+            home: Scaffold(body: EntryDetailSheet(entry: _textEntry())),
           ),
         ),
       );
@@ -162,9 +154,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           child: MaterialApp(
-            home: Scaffold(
-              body: EntryDetailSheet(entry: _textEntry()),
-            ),
+            home: Scaffold(body: EntryDetailSheet(entry: _textEntry())),
           ),
         ),
       );

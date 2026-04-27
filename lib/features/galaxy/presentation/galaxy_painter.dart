@@ -104,11 +104,7 @@ class GalaxyPainter extends CustomPainter {
     );
 
     // Ana nokta
-    canvas.drawCircle(
-      position,
-      radius,
-      Paint()..color = color,
-    );
+    canvas.drawCircle(position, radius, Paint()..color = color);
 
     // Parlak merkez — beyaz ile blend
     canvas.drawCircle(

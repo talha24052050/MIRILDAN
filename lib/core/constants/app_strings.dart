@@ -73,14 +73,36 @@ class AppStrings {
 
   // Ayarlar
   static const String settingsTitle = 'Ayarlar';
+  static const String settingsAppearanceSection = 'Görünüm';
   static const String settingsLanguage = 'Dil';
+  static const String settingsLanguageTr = 'Türkçe';
+  static const String settingsLanguageEn = 'English';
   static const String settingsTheme = 'Tema';
+  static const String settingsThemeDarkGalaxy = 'Koyu Galaxy';
+  static const String settingsThemeGradientNight = 'Gradient Gece';
+  static const String settingsThemeWhiteMinimal = 'Beyaz Minimal';
+  static const String settingsThemePaper = 'Kağıt';
+  static const String settingsNotificationsSection = 'Bildirimler';
+  static const String settingsNotifications = 'Günlük hatırlatma';
+  static const String settingsNotificationTime = 'Hatırlatma saati';
+  static const String settingsDataSection = 'Veri';
   static const String settingsDateFormat = 'Tarih Gösterimi';
-  static const String settingsNotifications = 'Bildirimler';
-  static const String settingsAccount = 'Hesap';
   static const String settingsExport = 'Verileri Dışa Aktar';
   static const String settingsDeleteAll = 'Tüm Verileri Sil';
+  static const String settingsDeleteAllConfirmTitle = 'Tüm kayıtları sil?';
+  static const String settingsDeleteAllConfirmBody =
+      'Bu işlem geri alınamaz. Tüm kayıtların ve tercihlerinin silinecek.';
+  static const String settingsAccountSection = 'Hesap';
+  static const String settingsAccount = 'Hesap';
+  static const String settingsSignOut = 'Çıkış yap';
+  static const String settingsSignOutConfirmTitle =
+      'Çıkış yapmak istediğine emin misin?';
+  static const String settingsSignOutConfirmBody =
+      'Kayıtların cihazında saklanmaya devam eder.';
+  static const String settingsGuest = 'Misafir kullanıcı';
+  static const String settingsAboutSection = 'Hakkında';
   static const String settingsAbout = 'Hakkında';
+  static const String settingsVersion = 'Versiyon';
 
   // Auth
   static const String authSignInTitle = 'Hoş geldin.';

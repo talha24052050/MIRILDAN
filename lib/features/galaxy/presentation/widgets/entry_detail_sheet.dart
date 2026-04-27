@@ -27,9 +27,7 @@ class EntryDetailSheet extends StatelessWidget {
       context: context,
       backgroundColor: AppColors.darkSurface,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(AppRadius.xl),
-        ),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.xl)),
       ),
       builder: (_) => EntryDetailSheet(entry: entry, onDeleted: onDeleted),
     );
@@ -38,8 +36,10 @@ class EntryDetailSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final emotionColor = EmotionColor.values.byName(entry.color.name);
-    final dateStr = DateFormat('d MMMM yyyy, HH:mm', 'tr_TR')
-        .format(entry.createdAt);
+    final dateStr = DateFormat(
+      'd MMMM yyyy, HH:mm',
+      'tr_TR',
+    ).format(entry.createdAt);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(
@@ -126,9 +126,7 @@ class EntryDetailSheet extends StatelessWidget {
             width: double.infinity,
             child: TextButton(
               onPressed: () => _handleDelete(context),
-              style: TextButton.styleFrom(
-                foregroundColor: AppColors.error,
-              ),
+              style: TextButton.styleFrom(foregroundColor: AppColors.error),
               child: Text(AppStrings.listViewDeleteTitle),
             ),
           ),
@@ -167,7 +165,9 @@ class _AudioRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final duration = entry.audioDurationMs != null
-        ? DurationFormatter.format(Duration(milliseconds: entry.audioDurationMs!))
+        ? DurationFormatter.format(
+            Duration(milliseconds: entry.audioDurationMs!),
+          )
         : '--:--';
 
     return Row(

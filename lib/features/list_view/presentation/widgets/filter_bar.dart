@@ -100,9 +100,7 @@ class _FilterChip extends StatelessWidget {
         child: Text(
           label,
           style: AppTextStyles.labelSmall.copyWith(
-            color: isSelected
-                ? Colors.white
-                : AppColors.darkOnSurfaceVariant,
+            color: isSelected ? Colors.white : AppColors.darkOnSurfaceVariant,
           ),
         ),
       ),
@@ -132,9 +130,7 @@ class _ColorChip extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: emotionColor.color,
-          border: isSelected
-              ? Border.all(color: Colors.white, width: 2)
-              : null,
+          border: isSelected ? Border.all(color: Colors.white, width: 2) : null,
           boxShadow: isSelected
               ? [
                   BoxShadow(

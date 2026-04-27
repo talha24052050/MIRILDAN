@@ -16,17 +16,18 @@
 | 7 | Kayıt Listesi, Oynatma ve Filtreleme | `feature/phase-7-list-playback` | ✅ |
 | 8 | Galaxy Görünümü | `feature/phase-8-galaxy` | ✅ |
 | 9 | Onboarding ve Hesap Sistemi | `feature/phase-9-onboarding` | ✅ |
+| 10 | Bildirimler, Ayarlar, Tema Seçenekleri | `feature/phase-10-settings` | ✅ |
 
 ---
 
-## Sıradaki Aşama: Aşama 10 — Bildirimler, Ayarlar, Tema Seçenekleri
+## Sıradaki Aşama: Aşama 11 — Minimal Streak/Rozet Sistemi
 
 **Durum:** Bekliyor (kullanıcı onayı bekleniyor)
-**Branch:** `feature/phase-10-settings` (henüz açılmadı)
+**Branch:** `feature/phase-11-badges` (henüz açılmadı)
 
 ### Yapılacaklar
 
-- [ ] Bildirim sistemi (flutter_local_notifications)
-- [ ] Ayarlar ekranı (tema, dil, bildirim zamanı)
-- [ ] Tema seçenekleri (4 tema arası geçiş)
-- [ ] Dil seçimi (TR/EN)
+- [ ] Streak takibi (ardışık gün sayısı, baskısız)
+- [ ] Rozet modeli ve kazanma mantığı
+- [ ] Rozet listesi / galeri ekranı
+- [ ] "İlk kayıt", "7 gün", "30 gün" gibi milestone rozetleri

@@ -46,12 +46,12 @@ class AuthNotifier extends _$AuthNotifier {
   @override
   AuthActionState build() => AuthActionIdle();
 
-  Future<void> signInWithGoogle() => _run(
-    () => ref.read(authServiceProvider).signInWithGoogle(),
-  );
+  Future<void> signInWithGoogle() =>
+      _run(() => ref.read(authServiceProvider).signInWithGoogle());
 
   Future<void> signInWithEmail(String email, String password) => _run(
-    () => ref.read(authServiceProvider).signInWithEmailPassword(email, password),
+    () =>
+        ref.read(authServiceProvider).signInWithEmailPassword(email, password),
   );
 
   Future<void> createAccount(String email, String password) => _run(
@@ -60,9 +60,7 @@ class AuthNotifier extends _$AuthNotifier {
         .createAccountWithEmailPassword(email, password),
   );
 
-  Future<void> signOut() => _run(
-    () => ref.read(authServiceProvider).signOut(),
-  );
+  Future<void> signOut() => _run(() => ref.read(authServiceProvider).signOut());
 
   Future<void> _run(Future<dynamic> Function() action) async {
     state = AuthActionLoading();

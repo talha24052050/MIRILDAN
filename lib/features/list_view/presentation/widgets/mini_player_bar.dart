@@ -64,11 +64,14 @@ class MiniPlayerBar extends ConsumerWidget {
             stream: service.positionStream,
             builder: (context, snapshot) {
               final position = snapshot.data ?? Duration.zero;
-              final total = service.duration ??
+              final total =
+                  service.duration ??
                   Duration(milliseconds: entry.audioDurationMs ?? 0);
               final progress = total.inMilliseconds > 0
-                  ? (position.inMilliseconds / total.inMilliseconds)
-                      .clamp(0.0, 1.0)
+                  ? (position.inMilliseconds / total.inMilliseconds).clamp(
+                      0.0,
+                      1.0,
+                    )
                   : 0.0;
 
               return Row(

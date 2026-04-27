@@ -219,15 +219,19 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
           maxLines: 6,
           maxLength: AppStrings.recordTextMaxLength,
           buildCounter:
-              (context, {required currentLength, required isFocused, maxLength}) =>
-                  Text(
-                    '$currentLength / $maxLength',
-                    style: AppTextStyles.labelSmall.copyWith(
-                      color: currentLength >= maxLength!
-                          ? AppColors.error
-                          : AppColors.darkOnSurfaceVariant,
-                    ),
-                  ),
+              (
+                context, {
+                required currentLength,
+                required isFocused,
+                maxLength,
+              }) => Text(
+                '$currentLength / $maxLength',
+                style: AppTextStyles.labelSmall.copyWith(
+                  color: currentLength >= maxLength!
+                      ? AppColors.error
+                      : AppColors.darkOnSurfaceVariant,
+                ),
+              ),
           autofocus: true,
         ),
         const Spacer(),

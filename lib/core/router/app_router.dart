@@ -8,6 +8,7 @@ import '../../features/list_view/presentation/list_view_screen.dart';
 import '../../features/onboarding/presentation/onboarding_screen.dart';
 import '../../features/recording/presentation/color_picker_screen.dart';
 import '../../features/recording/presentation/recording_screen.dart';
+import '../../features/settings/presentation/settings_screen.dart';
 
 part 'routes.dart';
 
@@ -91,7 +92,7 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.settings,
       name: 'settings',
-      builder: (context, state) => const _PlaceholderScreen(title: 'Ayarlar'),
+      builder: (context, state) => const SettingsScreen(),
     ),
   ],
   errorBuilder: (context, state) =>
