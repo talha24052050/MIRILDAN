@@ -7,6 +7,26 @@ Format: [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/)
 
 ## [Unreleased]
 
+## Aşama 10 — Bildirimler, Ayarlar, Tema Seçenekleri
+
+**Branch:** `feature/phase-10-settings` | **Tarih:** Nisan 2026
+
+### Eklendi
+- `lib/features/settings/data/notification_service.dart` — `flutter_local_notifications` v21 wrapper: günlük tekrarlayan hatırlatma, izin isteme, iptal
+- `lib/features/settings/providers/notification_provider.dart` — bildirim açma/kapatma ve saat seçimi; `SharedPreferences`'e kalıcı kaydeder
+- `lib/features/settings/presentation/settings_screen.dart` — Görünüm (tema/dil), Bildirimler, Hesap ve Veri bölümleri; Google/e-posta hesabı veya misafir gösterimi
+- `test/features/settings/settings_screen_test.dart` — 8 widget + unit testi
+- `timezone: ^0.11.0` bağımlılığı eklendi
+
+### Değişti
+- `ThemeNotifier`: seçilen tema `SharedPreferences`'a kaydedilip uygulama açılışında yükleniyor
+- `LocaleNotifier`: seçilen dil `SharedPreferences`'a kaydedilip uygulama açılışında yükleniyor
+- `app_router.dart`: `/settings` rotası artık `SettingsScreen`'e bağlı (placeholder değil)
+- `main.dart`: `NotificationService.instance.init()` startup'ta çağrılıyor
+- Tüm kaynak dosyalara `dart format` uygulandı
+
+---
+
 ## Aşama 9 — Onboarding ve Hesap Sistemi
 
 **Branch:** `feature/phase-9-onboarding` | **Tarih:** Nisan 2026
