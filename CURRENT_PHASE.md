@@ -17,17 +17,18 @@
 | 8 | Galaxy Görünümü | `feature/phase-8-galaxy` | ✅ |
 | 9 | Onboarding ve Hesap Sistemi | `feature/phase-9-onboarding` | ✅ |
 | 10 | Bildirimler, Ayarlar, Tema Seçenekleri | `feature/phase-10-settings` | ✅ |
+| 11 | Minimal Streak/Rozet Sistemi | — | ⏭️ Atlandı |
+| 12 | Paylaşım Özelliği | `feature/phase-12-sharing` | ✅ |
 
 ---
 
-## Sıradaki Aşama: Aşama 11 — Minimal Streak/Rozet Sistemi
+## Sıradaki Aşama: Aşama 13 — Çok Dilli Destek + Tablet Optimizasyonu + Son Cilalama
 
 **Durum:** Bekliyor (kullanıcı onayı bekleniyor)
-**Branch:** `feature/phase-11-badges` (henüz açılmadı)
+**Branch:** `feature/phase-13-polish` (henüz açılmadı)
 
 ### Yapılacaklar
 
-- [ ] Streak takibi (ardışık gün sayısı, baskısız)
-- [ ] Rozet modeli ve kazanma mantığı
-- [ ] Rozet listesi / galeri ekranı
-- [ ] "İlk kayıt", "7 gün", "30 gün" gibi milestone rozetleri
+- [ ] İngilizce çevirilerin tamamlanması
+- [ ] Tablet layout adaptasyonu (responsive UI)
+- [ ] Genel polish: animasyonlar, edge case'ler, son hata düzeltmeleri

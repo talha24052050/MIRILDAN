@@ -11,8 +11,9 @@ import '../../../../core/widgets/confirm_dialog.dart';
 import '../../../../data/models/entry.dart';
 import '../../../../data/repositories/entry_repository.dart';
 import '../../../../data/services/audio_file_service.dart';
+import '../../../sharing/data/sharing_service.dart';
 
-class EntryDetailSheet extends StatelessWidget {
+class EntryDetailSheet extends StatefulWidget {
   const EntryDetailSheet({super.key, required this.entry, this.onDeleted});
 
   final Entry entry;
@@ -32,6 +33,16 @@ class EntryDetailSheet extends StatelessWidget {
       builder: (_) => EntryDetailSheet(entry: entry, onDeleted: onDeleted),
     );
   }
+
+  @override
+  State<EntryDetailSheet> createState() => _EntryDetailSheetState();
+}
+
+class _EntryDetailSheetState extends State<EntryDetailSheet> {
+  bool _sharing = false;
+
+  Entry get entry => widget.entry;
+  VoidCallback? get onDeleted => widget.onDeleted;
 
   @override
   Widget build(BuildContext context) {
@@ -121,18 +132,43 @@ class EntryDetailSheet extends StatelessWidget {
 
           const SizedBox(height: AppSpacing.xl),
 
-          // Sil butonu
-          SizedBox(
-            width: double.infinity,
-            child: TextButton(
-              onPressed: () => _handleDelete(context),
-              style: TextButton.styleFrom(foregroundColor: AppColors.error),
-              child: Text(AppStrings.listViewDeleteTitle),
-            ),
+          // Paylaş + Sil butonları
+          Row(
+            children: [
+              Expanded(
+                child: TextButton.icon(
+                  onPressed: _sharing ? null : () => _handleShare(context),
+                  icon: _sharing
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Icon(Icons.share_outlined, size: 18),
+                  label: Text(AppStrings.share),
+                ),
+              ),
+              Expanded(
+                child: TextButton(
+                  onPressed: () => _handleDelete(context),
+                  style: TextButton.styleFrom(foregroundColor: AppColors.error),
+                  child: Text(AppStrings.listViewDeleteTitle),
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
+  }
+
+  Future<void> _handleShare(BuildContext context) async {
+    setState(() => _sharing = true);
+    try {
+      await SharingService.instance.shareEntry(context: context, entry: entry);
+    } finally {
+      if (mounted) setState(() => _sharing = false);
+    }
   }
 
   Future<void> _handleDelete(BuildContext context) async {

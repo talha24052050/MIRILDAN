@@ -7,6 +7,20 @@ Format: [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/)
 
 ## [Unreleased]
 
+## Aşama 12 — Paylaşım Özelliği
+
+**Branch:** `feature/phase-12-sharing` | **Tarih:** Nisan 2026
+
+### Eklendi
+- `lib/features/sharing/presentation/widgets/share_card_widget.dart` — Anı kartı widget'ı: duygu rengi gradient arka plan, içerik (ses/metin/karışık), tarih ve uygulama adı
+- `lib/features/sharing/data/sharing_service.dart` — `SharingService` singleton: `Overlay` ile görünmez render → PNG → `SharePlus.instance.share(ShareParams)`
+- `test/features/sharing/sharing_test.dart` — 7 widget testi (ShareCardWidget × 5, EntryDetailSheet paylaş butonu × 2)
+
+### Değişti
+- `EntryDetailSheet`: `StatelessWidget` → `StatefulWidget`; Paylaş + Sil butonları yan yana Row; paylaş tıklanınca loading state
+
+---
+
 ## Aşama 10 — Bildirimler, Ayarlar, Tema Seçenekleri
 
 **Branch:** `feature/phase-10-settings` | **Tarih:** Nisan 2026
