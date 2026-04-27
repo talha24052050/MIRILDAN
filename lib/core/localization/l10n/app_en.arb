@@ -1,0 +1,67 @@
+{
+  "@@locale": "en",
+
+  "appName": "Mırıldan",
+
+  "onboarding1Title": "Welcome to\nMırıldan.",
+  "onboarding1Subtitle": "Capture your feelings, don't track them.",
+  "onboarding2Title": "Speak or write,\npick a color.",
+  "onboarding2Subtitle": "At your own pace, whenever you feel like it.",
+  "onboarding3Title": "Everything is\nin your control.",
+  "onboarding3Subtitle": "Your entries stay on your device only.\nCreating an account is optional.",
+  "onboardingContinue": "Continue",
+  "onboardingStart": "Get Started",
+  "onboardingCreateAccount": "Create Account",
+  "onboardingSkip": "Not now",
+
+  "galaxyEmpty": "Leave your first whisper...",
+  "galaxyEmptySubtitle": "We're here whenever you feel something.",
+
+  "recordHold": "Hold to speak",
+  "recordWrite": "Write",
+  "recordShuffle": "Shuffle",
+  "recordColorTitle": "How does this moment feel?",
+  "recordAddNote": "Want to add a note?",
+  "recordNoteHint": "Optional...",
+  "recordSave": "Save",
+  "recordCancel": "Cancel",
+
+  "emotionYellow": "Energy",
+  "emotionBlue": "Calm",
+  "emotionRed": "Anger",
+  "emotionGreen": "Peace",
+  "emotionPurple": "Thoughtful",
+  "emotionGray": "Empty",
+  "emotionPink": "Love",
+  "emotionOrange": "Excitement",
+
+  "notifMissed7Days": "We missed you. Want to leave something?",
+  "notifMissed30Days": "Mırıldan is still here. Come back whenever you're ready.",
+
+  "settingsTitle": "Settings",
+  "settingsTheme": "Theme",
+  "settingsLanguage": "Language",
+  "settingsDateFormat": "Date Display",
+  "settingsNotifications": "Notifications",
+  "settingsAccount": "Account",
+  "settingsExport": "Export Data",
+  "settingsDeleteAll": "Delete All Data",
+  "settingsAbout": "About",
+
+  "themeDarkGalaxy": "Dark Galaxy",
+  "themeGradientNight": "Gradient Night",
+  "themeWhiteMinimal": "White Minimal",
+  "themePaper": "Paper",
+
+  "dateFormatRelative": "Relative",
+  "dateFormatExact": "Exact",
+  "dateFormatMonthOnly": "Month Only",
+
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "delete": "Delete",
+  "share": "Share",
+  "changeColor": "Change Color",
+  "noAccountLabel": "Not signed in",
+  "appVersion": "Mırıldan v1.0"
+}
