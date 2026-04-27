@@ -4,9 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mirildan/core/constants/app_strings.dart';
 import 'package:mirildan/features/onboarding/presentation/onboarding_screen.dart';
 
-Widget _wrap(Widget child) => ProviderScope(
-      child: MaterialApp(home: child),
-    );
+Widget _wrap(Widget child) => ProviderScope(child: MaterialApp(home: child));
 
 void main() {
   group('OnboardingScreen', () {
@@ -35,8 +33,9 @@ void main() {
       expect(find.text(AppStrings.onboarding2Title), findsOneWidget);
     });
 
-    testWidgets('son sayfada Hesap Oluştur ve Şimdi değil görünür',
-        (tester) async {
+    testWidgets('son sayfada Hesap Oluştur ve Şimdi değil görünür', (
+      tester,
+    ) async {
       await tester.pumpWidget(_wrap(const OnboardingScreen()));
       await tester.pump();
 

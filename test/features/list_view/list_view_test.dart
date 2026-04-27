@@ -54,21 +54,21 @@ class _FakePlayerNotifier extends PlayerNotifier {
 // ── Test verisi ───────────────────────────────────────────────────────────────
 
 Entry _textEntry({int id = 1}) => Entry(
-      id: id,
-      createdAt: DateTime(2024, 6, 1, 14, 30),
-      type: EntryType.text,
-      color: EntryColor.blue,
-      text: 'Bugün çok mutluydum',
-    );
+  id: id,
+  createdAt: DateTime(2024, 6, 1, 14, 30),
+  type: EntryType.text,
+  color: EntryColor.blue,
+  text: 'Bugün çok mutluydum',
+);
 
 Entry _audioEntry({int id = 2}) => Entry(
-      id: id,
-      createdAt: DateTime(2024, 6, 1, 9, 0),
-      type: EntryType.audio,
-      color: EntryColor.red,
-      audioPath: '/fake/audio.m4a',
-      audioDurationMs: 5000,
-    );
+  id: id,
+  createdAt: DateTime(2024, 6, 1, 9, 0),
+  type: EntryType.audio,
+  color: EntryColor.red,
+  audioPath: '/fake/audio.m4a',
+  audioDurationMs: 5000,
+);
 
 // ── Testler ───────────────────────────────────────────────────────────────────
 
@@ -81,8 +81,9 @@ void main() {
         ProviderScope(
           overrides: [
             filteredEntriesProvider.overrideWith((_) async => <Entry>[]),
-            audioPlayerServiceProvider
-                .overrideWithValue(_FakeAudioPlayerService()),
+            audioPlayerServiceProvider.overrideWithValue(
+              _FakeAudioPlayerService(),
+            ),
             playerProvider.overrideWith(() => _FakePlayerNotifier()),
           ],
           child: const MaterialApp(home: ListViewScreen()),
@@ -98,10 +99,10 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            filteredEntriesProvider
-                .overrideWith((_) async => [_textEntry()]),
-            audioPlayerServiceProvider
-                .overrideWithValue(_FakeAudioPlayerService()),
+            filteredEntriesProvider.overrideWith((_) async => [_textEntry()]),
+            audioPlayerServiceProvider.overrideWithValue(
+              _FakeAudioPlayerService(),
+            ),
             playerProvider.overrideWith(() => _FakePlayerNotifier()),
           ],
           child: const MaterialApp(home: ListViewScreen()),
@@ -120,8 +121,9 @@ void main() {
             filteredEntriesProvider.overrideWith(
               (_) async => [_textEntry(id: 1), _audioEntry(id: 2)],
             ),
-            audioPlayerServiceProvider
-                .overrideWithValue(_FakeAudioPlayerService()),
+            audioPlayerServiceProvider.overrideWithValue(
+              _FakeAudioPlayerService(),
+            ),
             playerProvider.overrideWith(() => _FakePlayerNotifier()),
           ],
           child: const MaterialApp(home: ListViewScreen()),
@@ -137,8 +139,9 @@ void main() {
         ProviderScope(
           overrides: [
             filteredEntriesProvider.overrideWith((_) async => <Entry>[]),
-            audioPlayerServiceProvider
-                .overrideWithValue(_FakeAudioPlayerService()),
+            audioPlayerServiceProvider.overrideWithValue(
+              _FakeAudioPlayerService(),
+            ),
             playerProvider.overrideWith(() => _FakePlayerNotifier()),
           ],
           child: const MaterialApp(home: ListViewScreen()),
@@ -152,13 +155,12 @@ void main() {
 
   group('FilterBar', () {
     Widget wrap() => ProviderScope(
-          overrides: [
-            audioPlayerServiceProvider
-                .overrideWithValue(_FakeAudioPlayerService()),
-            playerProvider.overrideWith(() => _FakePlayerNotifier()),
-          ],
-          child: const MaterialApp(home: Scaffold(body: FilterBar())),
-        );
+      overrides: [
+        audioPlayerServiceProvider.overrideWithValue(_FakeAudioPlayerService()),
+        playerProvider.overrideWith(() => _FakePlayerNotifier()),
+      ],
+      child: const MaterialApp(home: Scaffold(body: FilterBar())),
+    );
 
     testWidgets('"Tümü" chip\'i görünür', (tester) async {
       await tester.pumpWidget(wrap());
@@ -171,14 +173,16 @@ void main() {
       expect(find.text(AppStrings.listViewFilterText), findsOneWidget);
     });
 
-    testWidgets('ses filtresine basınca filter state güncellenir',
-        (tester) async {
+    testWidgets('ses filtresine basınca filter state güncellenir', (
+      tester,
+    ) async {
       late WidgetRef capturedRef;
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            audioPlayerServiceProvider
-                .overrideWithValue(_FakeAudioPlayerService()),
+            audioPlayerServiceProvider.overrideWithValue(
+              _FakeAudioPlayerService(),
+            ),
             playerProvider.overrideWith(() => _FakePlayerNotifier()),
           ],
           child: MaterialApp(
@@ -203,13 +207,14 @@ void main() {
 
   group('EntryListTile', () {
     Widget wrapTile(Entry entry) => ProviderScope(
-          overrides: [
-            audioPlayerServiceProvider
-                .overrideWithValue(_FakeAudioPlayerService()),
-            playerProvider.overrideWith(() => _FakePlayerNotifier()),
-          ],
-          child: MaterialApp(home: Scaffold(body: EntryListTile(entry: entry))),
-        );
+      overrides: [
+        audioPlayerServiceProvider.overrideWithValue(_FakeAudioPlayerService()),
+        playerProvider.overrideWith(() => _FakePlayerNotifier()),
+      ],
+      child: MaterialApp(
+        home: Scaffold(body: EntryListTile(entry: entry)),
+      ),
+    );
 
     testWidgets('metin kaydı — içeriği gösterir', (tester) async {
       await tester.pumpWidget(wrapTile(_textEntry()));

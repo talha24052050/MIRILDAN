@@ -11,11 +11,9 @@ class _FakeAuthNotifier extends AuthNotifier {
 }
 
 Widget _wrap(Widget child) => ProviderScope(
-      overrides: [
-        authProvider.overrideWith(_FakeAuthNotifier.new),
-      ],
-      child: MaterialApp(home: child),
-    );
+  overrides: [authProvider.overrideWith(_FakeAuthNotifier.new)],
+  child: MaterialApp(home: child),
+);
 
 void main() {
   group('AuthScreen', () {
@@ -35,8 +33,9 @@ void main() {
       expect(find.text(AppStrings.authSignInWithGoogle), findsOneWidget);
     });
 
-    testWidgets('"Hesabın yok mu" butonuna basınca kayıt moduna geçer',
-        (tester) async {
+    testWidgets('"Hesabın yok mu" butonuna basınca kayıt moduna geçer', (
+      tester,
+    ) async {
       await tester.pumpWidget(_wrap(const AuthScreen()));
       await tester.pump();
 
@@ -64,15 +63,16 @@ void main() {
       final errorNotifier = _ErrorAuthNotifier();
       await tester.pumpWidget(
         ProviderScope(
-          overrides: [
-            authProvider.overrideWith(() => errorNotifier),
-          ],
+          overrides: [authProvider.overrideWith(() => errorNotifier)],
           child: const MaterialApp(home: AuthScreen()),
         ),
       );
       await tester.pump();
 
-      expect(find.text('Bir sorun oluştu, tekrar dener misin?'), findsOneWidget);
+      expect(
+        find.text('Bir sorun oluştu, tekrar dener misin?'),
+        findsOneWidget,
+      );
     });
   });
 }

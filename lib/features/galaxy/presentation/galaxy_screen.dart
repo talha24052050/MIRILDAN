@@ -66,10 +66,7 @@ class _GalaxyScreenState extends ConsumerState<GalaxyScreen>
     // Dokunulan noktayı InteractiveViewer'ın dönüşüm matrisine göre hesapla
     final matrix = _transformController.value;
     final inverted = Matrix4.inverted(matrix);
-    final local = MatrixUtils.transformPoint(
-      inverted,
-      details.localPosition,
-    );
+    final local = MatrixUtils.transformPoint(inverted, details.localPosition);
 
     const hitRadius = 20.0;
     for (final dot in _lastPainter!.dots) {
@@ -101,7 +98,10 @@ class _GalaxyScreenState extends ConsumerState<GalaxyScreen>
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.list_rounded, color: AppColors.darkOnSurface),
+            icon: const Icon(
+              Icons.list_rounded,
+              color: AppColors.darkOnSurface,
+            ),
             onPressed: () => context.push(AppRoutes.listView),
           ),
           const SizedBox(width: AppSpacing.xs),
@@ -167,10 +167,7 @@ class _GalaxyCanvas extends StatelessWidget {
               gradient: RadialGradient(
                 center: Alignment.center,
                 radius: 1.2,
-                colors: [
-                  AppColors.darkSurface,
-                  AppColors.darkBackground,
-                ],
+                colors: [AppColors.darkSurface, AppColors.darkBackground],
               ),
             ),
           ),

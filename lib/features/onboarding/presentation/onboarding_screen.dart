@@ -84,10 +84,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 itemBuilder: (context, i) => _pages[i],
               ),
             ),
-            _PageIndicator(
-              count: _pages.length,
-              current: _currentPage,
-            ),
+            _PageIndicator(count: _pages.length, current: _currentPage),
             const SizedBox(height: AppSpacing.lg),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
@@ -126,11 +123,7 @@ class _OnboardingPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            illustration,
-            size: 96,
-            color: AppColors.accent,
-          ),
+          Icon(illustration, size: 96, color: AppColors.accent),
           const SizedBox(height: AppSpacing.xxl),
           Text(
             title,

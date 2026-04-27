@@ -15,11 +15,9 @@ class EntryListFilter extends _$EntryListFilter {
   @override
   ({EntryColor? color, EntryType? type}) build() => (color: null, type: null);
 
-  void setColor(EntryColor? color) =>
-      state = (color: color, type: state.type);
+  void setColor(EntryColor? color) => state = (color: color, type: state.type);
 
-  void setType(EntryType? type) =>
-      state = (color: state.color, type: type);
+  void setType(EntryType? type) => state = (color: state.color, type: type);
 
   void clear() => state = (color: null, type: null);
 }

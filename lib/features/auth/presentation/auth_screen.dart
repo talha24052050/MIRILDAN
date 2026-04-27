@@ -77,8 +77,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   Widget build(BuildContext context) {
     final authState = ref.watch(authProvider);
     final isLoading = authState is AuthActionLoading;
-    final errorMessage =
-        authState is AuthActionError ? authState.message : null;
+    final errorMessage = authState is AuthActionError
+        ? authState.message
+        : null;
 
     return Scaffold(
       backgroundColor: AppColors.darkBackground,
@@ -116,9 +117,13 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
             // Ayırıcı
             Row(
               children: [
-                const Expanded(child: Divider(color: AppColors.darkSurfaceVariant)),
+                const Expanded(
+                  child: Divider(color: AppColors.darkSurfaceVariant),
+                ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.md,
+                  ),
                   child: Text(
                     AppStrings.authOrDivider,
                     style: AppTextStyles.bodySmall.copyWith(
@@ -126,7 +131,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                     ),
                   ),
                 ),
-                const Expanded(child: Divider(color: AppColors.darkSurfaceVariant)),
+                const Expanded(
+                  child: Divider(color: AppColors.darkSurfaceVariant),
+                ),
               ],
             ),
             const SizedBox(height: AppSpacing.md),
@@ -153,18 +160,19 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               style: AppTextStyles.bodyLarge.copyWith(
                 color: AppColors.darkOnSurface,
               ),
-              decoration: _inputDecoration(AppStrings.authPasswordHint).copyWith(
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _obscurePassword
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
-                    color: AppColors.darkOnSurfaceVariant,
+              decoration: _inputDecoration(AppStrings.authPasswordHint)
+                  .copyWith(
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscurePassword
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                        color: AppColors.darkOnSurfaceVariant,
+                      ),
+                      onPressed: () =>
+                          setState(() => _obscurePassword = !_obscurePassword),
+                    ),
                   ),
-                  onPressed: () =>
-                      setState(() => _obscurePassword = !_obscurePassword),
-                ),
-              ),
               enabled: !isLoading,
             ),
 
@@ -173,9 +181,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               const SizedBox(height: AppSpacing.sm),
               Text(
                 errorMessage,
-                style: AppTextStyles.bodySmall.copyWith(
-                  color: AppColors.error,
-                ),
+                style: AppTextStyles.bodySmall.copyWith(color: AppColors.error),
               ),
             ],
 

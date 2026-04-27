@@ -34,10 +34,9 @@ class ListViewScreen extends ConsumerWidget {
 
     // Çalan kaydı bul
     final currentEntry = entriesAsync.maybeWhen(
-      data: (entries) =>
-          currentlyPlayingId == null
-              ? null
-              : entries.where((e) => e.id == currentlyPlayingId).firstOrNull,
+      data: (entries) => currentlyPlayingId == null
+          ? null
+          : entries.where((e) => e.id == currentlyPlayingId).firstOrNull,
       orElse: () => null,
     );
 
@@ -69,10 +68,9 @@ class ListViewScreen extends ConsumerWidget {
                 child: CircularProgressIndicator(color: AppColors.accent),
               ),
               error: (_, _) => _ErrorState(),
-              data: (entries) =>
-                  entries.isEmpty
-                      ? const _EmptyState()
-                      : _EntryList(entries: entries),
+              data: (entries) => entries.isEmpty
+                  ? const _EmptyState()
+                  : _EntryList(entries: entries),
             ),
           ),
           if (currentEntry != null)
@@ -109,7 +107,11 @@ class _EntryList extends StatelessWidget {
   static List<Object> _buildItems(List<Entry> entries) {
     final groups = <DateTime, List<Entry>>{};
     for (final e in entries) {
-      final key = DateTime(e.createdAt.year, e.createdAt.month, e.createdAt.day);
+      final key = DateTime(
+        e.createdAt.year,
+        e.createdAt.month,
+        e.createdAt.day,
+      );
       (groups[key] ??= []).add(e);
     }
 

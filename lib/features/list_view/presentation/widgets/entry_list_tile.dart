@@ -40,7 +40,9 @@ class EntryListTile extends ConsumerWidget {
         ref.invalidate(filteredEntriesProvider);
       },
       child: InkWell(
-        onTap: _hasAudio ? () => ref.read(playerProvider.notifier).toggle(entry) : null,
+        onTap: _hasAudio
+            ? () => ref.read(playerProvider.notifier).toggle(entry)
+            : null,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: AppSpacing.xl,
@@ -65,7 +67,9 @@ class EntryListTile extends ConsumerWidget {
                       children: [
                         if (_hasAudio)
                           Padding(
-                            padding: const EdgeInsets.only(right: AppSpacing.xs),
+                            padding: const EdgeInsets.only(
+                              right: AppSpacing.xs,
+                            ),
                             child: Icon(
                               isCurrentEntry
                                   ? Icons.graphic_eq_rounded
