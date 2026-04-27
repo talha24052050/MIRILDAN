@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
-import '../../../core/constants/app_strings.dart';
 import '../../../core/constants/app_text_styles.dart';
+import '../../../core/localization/l10n_extensions.dart';
 import '../../../core/router/app_router.dart';
 import '../../../data/models/entry.dart';
 import '../providers/galaxy_providers.dart';
@@ -113,7 +113,7 @@ class _GalaxyScreenState extends ConsumerState<GalaxyScreen>
         ),
         error: (e, _) => Center(
           child: Text(
-            AppStrings.recordSaveError,
+            context.l10n.recordSaveError,
             style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.darkOnSurfaceVariant,
             ),
@@ -220,12 +220,13 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            AppStrings.galaxyEmpty,
+            l10n.galaxyEmpty,
             style: AppTextStyles.displayMedium.copyWith(
               color: AppColors.darkOnSurface,
             ),
@@ -233,7 +234,7 @@ class _EmptyState extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.sm),
           Text(
-            AppStrings.galaxyEmptySubtitle,
+            l10n.galaxyEmptySubtitle,
             style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.darkOnSurfaceVariant,
             ),

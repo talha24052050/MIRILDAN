@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:mirildan/core/constants/app_strings.dart';
+import 'package:mirildan/core/localization/l10n/app_localizations.dart';
 import 'package:mirildan/data/models/entry.dart';
 import 'package:mirildan/features/list_view/data/audio_player_service.dart';
 import 'package:mirildan/features/list_view/presentation/list_view_screen.dart';
@@ -70,6 +71,13 @@ Entry _audioEntry({int id = 2}) => Entry(
   audioDurationMs: 5000,
 );
 
+MaterialApp _l10nApp({required Widget home}) => MaterialApp(
+  locale: const Locale('tr'),
+  localizationsDelegates: AppLocalizations.localizationsDelegates,
+  supportedLocales: AppLocalizations.supportedLocales,
+  home: home,
+);
+
 // ── Testler ───────────────────────────────────────────────────────────────────
 
 void main() {
@@ -86,7 +94,7 @@ void main() {
             ),
             playerProvider.overrideWith(() => _FakePlayerNotifier()),
           ],
-          child: const MaterialApp(home: ListViewScreen()),
+          child: _l10nApp(home: const ListViewScreen()),
         ),
       );
       await tester.pump();
@@ -105,7 +113,7 @@ void main() {
             ),
             playerProvider.overrideWith(() => _FakePlayerNotifier()),
           ],
-          child: const MaterialApp(home: ListViewScreen()),
+          child: _l10nApp(home: const ListViewScreen()),
         ),
       );
       await tester.pump();
@@ -126,7 +134,7 @@ void main() {
             ),
             playerProvider.overrideWith(() => _FakePlayerNotifier()),
           ],
-          child: const MaterialApp(home: ListViewScreen()),
+          child: _l10nApp(home: const ListViewScreen()),
         ),
       );
       await tester.pump();
@@ -144,7 +152,7 @@ void main() {
             ),
             playerProvider.overrideWith(() => _FakePlayerNotifier()),
           ],
-          child: const MaterialApp(home: ListViewScreen()),
+          child: _l10nApp(home: const ListViewScreen()),
         ),
       );
       await tester.pump();
@@ -159,7 +167,7 @@ void main() {
         audioPlayerServiceProvider.overrideWithValue(_FakeAudioPlayerService()),
         playerProvider.overrideWith(() => _FakePlayerNotifier()),
       ],
-      child: const MaterialApp(home: Scaffold(body: FilterBar())),
+      child: _l10nApp(home: const Scaffold(body: FilterBar())),
     );
 
     testWidgets('"Tümü" chip\'i görünür', (tester) async {
@@ -186,6 +194,9 @@ void main() {
             playerProvider.overrideWith(() => _FakePlayerNotifier()),
           ],
           child: MaterialApp(
+            locale: const Locale('tr'),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
             home: Scaffold(
               body: Consumer(
                 builder: (_, ref, _) {
@@ -211,9 +222,7 @@ void main() {
         audioPlayerServiceProvider.overrideWithValue(_FakeAudioPlayerService()),
         playerProvider.overrideWith(() => _FakePlayerNotifier()),
       ],
-      child: MaterialApp(
-        home: Scaffold(body: EntryListTile(entry: entry)),
-      ),
+      child: _l10nApp(home: Scaffold(body: EntryListTile(entry: entry))),
     );
 
     testWidgets('metin kaydı — içeriği gösterir', (tester) async {

@@ -4,10 +4,11 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
-import '../../../core/constants/app_strings.dart';
 import '../../../core/constants/app_text_styles.dart';
 import '../../../core/constants/emotion_colors.dart';
+import '../../../core/localization/l10n_extensions.dart';
 import '../../../core/router/app_router.dart';
+import '../../../core/utils/responsive.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../../../data/models/entry.dart';
 import '../../../data/repositories/entry_repository.dart';
@@ -73,7 +74,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
       setState(() => _saving = false);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(AppStrings.recordSaveError),
+          content: Text(context.l10n.recordSaveError),
           backgroundColor: AppColors.darkSurface,
         ),
       );
@@ -81,12 +82,13 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
   }
 
   Future<void> _cancel() async {
+    final l10n = context.l10n;
     final confirmed = await showConfirmDialog(
       context: context,
-      title: AppStrings.recordCancelConfirmTitle,
-      body: AppStrings.recordCancelConfirmBodyColorPicker,
-      cancelLabel: AppStrings.recordCancelConfirmNo,
-      confirmLabel: AppStrings.recordCancelConfirmYes,
+      title: l10n.recordCancelConfirmTitle,
+      body: l10n.recordCancelConfirmBodyColorPicker,
+      cancelLabel: l10n.recordCancelConfirmNo,
+      confirmLabel: l10n.recordCancelConfirmYes,
     );
     if (!mounted || !confirmed) return;
 
@@ -122,13 +124,18 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
             onPressed: _saving ? null : _cancel,
           ),
         ),
-        body: SingleChildScrollView(
+        body: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: isTablet(context) ? 480 : double.infinity,
+            ),
+            child: SingleChildScrollView(
           padding: const EdgeInsets.all(AppSpacing.xl),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                AppStrings.recordColorTitle,
+                context.l10n.recordColorTitle,
                 style: AppTextStyles.headlineLarge.copyWith(
                   color: AppColors.darkOnSurface,
                 ),
@@ -143,7 +150,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
               ),
               const SizedBox(height: AppSpacing.xl),
               Text(
-                AppStrings.recordAddNote,
+                context.l10n.recordAddNote,
                 style: AppTextStyles.bodyMedium.copyWith(
                   color: AppColors.darkOnSurfaceVariant,
                 ),
@@ -155,7 +162,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
                   color: AppColors.darkOnSurface,
                 ),
                 decoration: InputDecoration(
-                  hintText: AppStrings.recordNoteHint,
+                  hintText: context.l10n.recordNoteHint,
                   hintStyle: AppTextStyles.bodyLarge.copyWith(
                     color: AppColors.darkOnSurfaceVariant,
                   ),
@@ -183,7 +190,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
                             color: Colors.white,
                           ),
                         )
-                      : Text(AppStrings.recordSave),
+                      : Text(context.l10n.recordSave),
                 ),
               ),
               const SizedBox(height: AppSpacing.sm),
@@ -192,7 +199,7 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
                 child: TextButton(
                   onPressed: _saving ? null : _cancel,
                   child: Text(
-                    AppStrings.recordCancel,
+                    context.l10n.recordCancel,
                     style: AppTextStyles.bodyMedium.copyWith(
                       color: AppColors.darkOnSurfaceVariant,
                     ),
@@ -200,6 +207,8 @@ class _ColorPickerScreenState extends State<ColorPickerScreen> {
                 ),
               ),
             ],
+          ),
+        ),
           ),
         ),
       ),

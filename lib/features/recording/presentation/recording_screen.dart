@@ -4,10 +4,11 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
-import '../../../core/constants/app_strings.dart';
 import '../../../core/constants/app_text_styles.dart';
+import '../../../core/localization/l10n_extensions.dart';
 import '../../../core/router/app_router.dart';
 import '../../../core/utils/duration_formatter.dart';
+import '../../../core/utils/responsive.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../domain/recording_state.dart';
 import '../providers/recording_providers.dart';
@@ -61,24 +62,25 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
   Future<void> _handleClose() async {
     final state = ref.read(recordingControllerProvider);
     final isCurrentlyRecording = state is RecordingInProgress;
+    final l10n = context.l10n;
 
     if (isCurrentlyRecording) {
       final confirmed = await showConfirmDialog(
         context: context,
-        title: AppStrings.recordCancelConfirmTitle,
-        body: AppStrings.recordCancelConfirmBodyAudio,
-        cancelLabel: AppStrings.recordCancelConfirmNo,
-        confirmLabel: AppStrings.recordCancelConfirmYes,
+        title: l10n.recordCancelConfirmTitle,
+        body: l10n.recordCancelConfirmBodyAudio,
+        cancelLabel: l10n.recordCancelConfirmNo,
+        confirmLabel: l10n.recordCancelConfirmYes,
       );
       if (!mounted || !confirmed) return;
       await ref.read(recordingControllerProvider.notifier).cancelRecording();
     } else if (_textMode && _textController.text.trim().isNotEmpty) {
       final confirmed = await showConfirmDialog(
         context: context,
-        title: AppStrings.recordCancelConfirmTitle,
-        body: AppStrings.recordCancelConfirmBodyText,
-        cancelLabel: AppStrings.recordCancelConfirmNo,
-        confirmLabel: AppStrings.recordCancelConfirmYes,
+        title: l10n.recordCancelConfirmTitle,
+        body: l10n.recordCancelConfirmBodyText,
+        cancelLabel: l10n.recordCancelConfirmNo,
+        confirmLabel: l10n.recordCancelConfirmYes,
       );
       if (!mounted || !confirmed) return;
     }
@@ -125,8 +127,8 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
                 onPressed: () => setState(() => _textMode = !_textMode),
                 child: Text(
                   _textMode
-                      ? AppStrings.recordSwitchToAudio
-                      : AppStrings.recordWrite,
+                      ? context.l10n.recordSwitchToAudio
+                      : context.l10n.recordWrite,
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.accent,
                   ),
@@ -134,8 +136,7 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
               ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+        body: _CenteredContent(
           child: _textMode
               ? _buildTextMode()
               : _buildAudioMode(isRecording, amplitude, elapsed, state),
@@ -171,13 +172,13 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.md),
             child: Text(
-              AppStrings.recordPermissionDenied,
+              context.l10n.recordPermissionDenied,
               style: AppTextStyles.bodySmall.copyWith(color: AppColors.error),
               textAlign: TextAlign.center,
             ),
           ),
         Text(
-          isRecording ? AppStrings.recordRelease : AppStrings.recordHold,
+          isRecording ? context.l10n.recordRelease : context.l10n.recordHold,
           style: AppTextStyles.bodyMedium.copyWith(
             color: AppColors.darkOnSurfaceVariant,
           ),
@@ -204,7 +205,7 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
             color: AppColors.darkOnSurface,
           ),
           decoration: InputDecoration(
-            hintText: AppStrings.recordTextHint,
+            hintText: context.l10n.recordTextHint,
             hintStyle: AppTextStyles.bodyLarge.copyWith(
               color: AppColors.darkOnSurfaceVariant,
             ),
@@ -217,7 +218,7 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
             contentPadding: const EdgeInsets.all(AppSpacing.md),
           ),
           maxLines: 6,
-          maxLength: AppStrings.recordTextMaxLength,
+          maxLength: 280,
           buildCounter:
               (
                 context, {
@@ -239,11 +240,34 @@ class _RecordingScreenState extends ConsumerState<RecordingScreen> {
           width: double.infinity,
           child: ElevatedButton(
             onPressed: _handleTextSave,
-            child: Text(AppStrings.recordContinue),
+            child: Text(context.l10n.recordContinue),
           ),
         ),
         const SizedBox(height: AppSpacing.xxl),
       ],
+    );
+  }
+}
+
+// Tablette içeriği ortalanmış, max genişlikte gösterir.
+class _CenteredContent extends StatelessWidget {
+  const _CenteredContent({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final wide = isTablet(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+      child: wide
+          ? Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 480),
+                child: child,
+              ),
+            )
+          : child,
     );
   }
 }

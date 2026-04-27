@@ -4,9 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
-import '../../../core/constants/app_strings.dart';
 import '../../../core/constants/app_text_styles.dart';
+import '../../../core/localization/l10n_extensions.dart';
 import '../../../core/router/app_router.dart';
+import '../../../core/utils/responsive.dart';
 import '../../../data/repositories/preferences_repository.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
@@ -20,25 +21,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   final _pageController = PageController();
   int _currentPage = 0;
 
-  static const _pages = [
-    _OnboardingPage(
-      title: AppStrings.onboarding1Title,
-      subtitle: AppStrings.onboarding1Subtitle,
-      illustration: Icons.mic_none_rounded,
-    ),
-    _OnboardingPage(
-      title: AppStrings.onboarding2Title,
-      subtitle: AppStrings.onboarding2Subtitle,
-      illustration: Icons.color_lens_outlined,
-    ),
-    _OnboardingPage(
-      title: AppStrings.onboarding3Title,
-      subtitle: AppStrings.onboarding3Subtitle,
-      illustration: Icons.lock_outline_rounded,
-    ),
-  ];
-
-  bool get _isLastPage => _currentPage == _pages.length - 1;
+  bool get _isLastPage => _currentPage == 2;
 
   Future<void> _markCompleted() async {
     final repo = PreferencesRepository();
@@ -71,6 +54,25 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final pages = [
+      _OnboardingPage(
+        title: l10n.onboarding1Title,
+        subtitle: l10n.onboarding1Subtitle,
+        illustration: Icons.mic_none_rounded,
+      ),
+      _OnboardingPage(
+        title: l10n.onboarding2Title,
+        subtitle: l10n.onboarding2Subtitle,
+        illustration: Icons.color_lens_outlined,
+      ),
+      _OnboardingPage(
+        title: l10n.onboarding3Title,
+        subtitle: l10n.onboarding3Subtitle,
+        illustration: Icons.lock_outline_rounded,
+      ),
+    ];
+
     return Scaffold(
       backgroundColor: AppColors.darkBackground,
       body: SafeArea(
@@ -79,21 +81,28 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             Expanded(
               child: PageView.builder(
                 controller: _pageController,
-                itemCount: _pages.length,
+                itemCount: pages.length,
                 onPageChanged: (i) => setState(() => _currentPage = i),
-                itemBuilder: (context, i) => _pages[i],
+                itemBuilder: (context, i) => pages[i],
               ),
             ),
-            _PageIndicator(count: _pages.length, current: _currentPage),
+            _PageIndicator(count: pages.length, current: _currentPage),
             const SizedBox(height: AppSpacing.lg),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
-              child: _isLastPage
-                  ? _LastPageActions(
-                      onGuest: _continueAsGuest,
-                      onCreateAccount: _goToAuth,
-                    )
-                  : _NextButton(onPressed: _nextPage),
+            Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: isTablet(context) ? 480 : double.infinity,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+                  child: _isLastPage
+                      ? _LastPageActions(
+                          onGuest: _continueAsGuest,
+                          onCreateAccount: _goToAuth,
+                        )
+                      : _NextButton(onPressed: _nextPage),
+                ),
+              ),
             ),
             const SizedBox(height: AppSpacing.xxl),
           ],
@@ -190,7 +199,7 @@ class _NextButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         onPressed: onPressed,
-        child: Text(AppStrings.onboardingContinue),
+        child: Text(context.l10n.onboardingContinue),
       ),
     );
   }
@@ -209,13 +218,14 @@ class _LastPageActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Column(
       children: [
         SizedBox(
           width: double.infinity,
           child: ElevatedButton(
             onPressed: onCreateAccount,
-            child: Text(AppStrings.onboardingCreateAccount),
+            child: Text(l10n.onboardingCreateAccount),
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
@@ -224,7 +234,7 @@ class _LastPageActions extends StatelessWidget {
           child: TextButton(
             onPressed: onGuest,
             child: Text(
-              AppStrings.onboardingSkip,
+              l10n.onboardingSkip,
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.darkOnSurfaceVariant,
               ),

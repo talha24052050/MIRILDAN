@@ -2,10 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mirildan/core/constants/app_strings.dart';
 import 'package:mirildan/core/constants/emotion_colors.dart';
+import 'package:mirildan/core/localization/l10n/app_localizations.dart';
 import 'package:mirildan/features/recording/presentation/color_picker_screen.dart';
 
 Widget _wrap(Widget child) {
-  return MaterialApp(home: child);
+  return MaterialApp(
+    locale: const Locale('tr'),
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    home: child,
+  );
 }
 
 void main() {

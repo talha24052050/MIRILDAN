@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mirildan/core/constants/app_strings.dart';
+import 'package:mirildan/core/localization/l10n/app_localizations.dart';
 import 'package:mirildan/core/providers/locale_provider.dart';
 import 'package:mirildan/core/providers/theme_provider.dart';
 import 'package:mirildan/core/theme/app_theme.dart';
@@ -22,7 +23,12 @@ Widget _wrap(Widget child) => ProviderScope(
     notificationProvider.overrideWith(_FakeNotificationNotifier.new),
     authStateProvider.overrideWith((ref) => Stream<User?>.value(null)),
   ],
-  child: MaterialApp(home: child),
+  child: MaterialApp(
+    locale: const Locale('tr'),
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    home: child,
+  ),
 );
 
 void main() {

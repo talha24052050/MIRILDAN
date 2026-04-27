@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
-import '../../../core/constants/app_strings.dart';
 import '../../../core/constants/app_text_styles.dart';
+import '../../../core/localization/l10n_extensions.dart';
 import '../../../core/router/app_router.dart';
 import '../../../data/repositories/preferences_repository.dart';
 import '../providers/auth_providers.dart';
@@ -75,11 +75,11 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final authState = ref.watch(authProvider);
     final isLoading = authState is AuthActionLoading;
-    final errorMessage = authState is AuthActionError
-        ? authState.message
-        : null;
+    final errorMessage =
+        authState is AuthActionError ? authState.message : null;
 
     return Scaffold(
       backgroundColor: AppColors.darkBackground,
@@ -97,24 +97,20 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              _isLogin
-                  ? AppStrings.authSignInTitle
-                  : AppStrings.authCreateAccountTitle,
+              _isLogin ? l10n.authSignInTitle : l10n.authCreateAccountTitle,
               style: AppTextStyles.headlineLarge.copyWith(
                 color: AppColors.darkOnSurface,
               ),
             ),
             const SizedBox(height: AppSpacing.xxl),
 
-            // Google giriş butonu
             _SocialButton(
-              label: AppStrings.authSignInWithGoogle,
+              label: l10n.authSignInWithGoogle,
               icon: Icons.g_mobiledata_rounded,
               onPressed: isLoading ? null : _signInWithGoogle,
             ),
             const SizedBox(height: AppSpacing.md),
 
-            // Ayırıcı
             Row(
               children: [
                 const Expanded(
@@ -125,7 +121,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                     horizontal: AppSpacing.md,
                   ),
                   child: Text(
-                    AppStrings.authOrDivider,
+                    l10n.authOrDivider,
                     style: AppTextStyles.bodySmall.copyWith(
                       color: AppColors.darkOnSurfaceVariant,
                     ),
@@ -138,7 +134,6 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
             ),
             const SizedBox(height: AppSpacing.md),
 
-            // Email alanı
             TextField(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
@@ -146,12 +141,11 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               style: AppTextStyles.bodyLarge.copyWith(
                 color: AppColors.darkOnSurface,
               ),
-              decoration: _inputDecoration(AppStrings.authEmailHint),
+              decoration: _inputDecoration(l10n.authEmailHint),
               enabled: !isLoading,
             ),
             const SizedBox(height: AppSpacing.md),
 
-            // Şifre alanı
             TextField(
               controller: _passwordController,
               obscureText: _obscurePassword,
@@ -160,34 +154,32 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
               style: AppTextStyles.bodyLarge.copyWith(
                 color: AppColors.darkOnSurface,
               ),
-              decoration: _inputDecoration(AppStrings.authPasswordHint)
-                  .copyWith(
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscurePassword
-                            ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined,
-                        color: AppColors.darkOnSurfaceVariant,
-                      ),
-                      onPressed: () =>
-                          setState(() => _obscurePassword = !_obscurePassword),
-                    ),
+              decoration: _inputDecoration(l10n.authPasswordHint).copyWith(
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscurePassword
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    color: AppColors.darkOnSurfaceVariant,
                   ),
+                  onPressed: () =>
+                      setState(() => _obscurePassword = !_obscurePassword),
+                ),
+              ),
               enabled: !isLoading,
             ),
 
-            // Hata mesajı
             if (errorMessage != null) ...[
               const SizedBox(height: AppSpacing.sm),
               Text(
                 errorMessage,
-                style: AppTextStyles.bodySmall.copyWith(color: AppColors.error),
+                style:
+                    AppTextStyles.bodySmall.copyWith(color: AppColors.error),
               ),
             ],
 
             const SizedBox(height: AppSpacing.xl),
 
-            // Giriş / Kayıt butonu
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -202,24 +194,19 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                         ),
                       )
                     : Text(
-                        _isLogin
-                            ? AppStrings.authSignIn
-                            : AppStrings.authCreateAccount,
+                        _isLogin ? l10n.authSignIn : l10n.authCreateAccount,
                       ),
               ),
             ),
             const SizedBox(height: AppSpacing.sm),
 
-            // Giriş ↔ Kayıt geçişi
             Center(
               child: TextButton(
                 onPressed: isLoading
                     ? null
                     : () => setState(() => _isLogin = !_isLogin),
                 child: Text(
-                  _isLogin
-                      ? AppStrings.authNoAccount
-                      : AppStrings.authHaveAccount,
+                  _isLogin ? l10n.authNoAccount : l10n.authHaveAccount,
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.darkOnSurfaceVariant,
                   ),
@@ -228,13 +215,12 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
             ),
             const SizedBox(height: AppSpacing.xl),
 
-            // Misafir devam
             SizedBox(
               width: double.infinity,
               child: TextButton(
                 onPressed: isLoading ? null : _continueAsGuest,
                 child: Text(
-                  AppStrings.onboardingSkip,
+                  l10n.onboardingSkip,
                   style: AppTextStyles.bodyMedium.copyWith(
                     color: AppColors.darkOnSurfaceVariant,
                   ),

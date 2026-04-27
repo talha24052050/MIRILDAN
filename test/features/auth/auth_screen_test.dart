@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mirildan/core/constants/app_strings.dart';
+import 'package:mirildan/core/localization/l10n/app_localizations.dart';
 import 'package:mirildan/features/auth/presentation/auth_screen.dart';
 import 'package:mirildan/features/auth/providers/auth_providers.dart';
 
@@ -12,7 +13,12 @@ class _FakeAuthNotifier extends AuthNotifier {
 
 Widget _wrap(Widget child) => ProviderScope(
   overrides: [authProvider.overrideWith(_FakeAuthNotifier.new)],
-  child: MaterialApp(home: child),
+  child: MaterialApp(
+    locale: const Locale('tr'),
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    home: child,
+  ),
 );
 
 void main() {
@@ -64,7 +70,12 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [authProvider.overrideWith(() => errorNotifier)],
-          child: const MaterialApp(home: AuthScreen()),
+          child: MaterialApp(
+            locale: const Locale('tr'),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const AuthScreen(),
+          ),
         ),
       );
       await tester.pump();

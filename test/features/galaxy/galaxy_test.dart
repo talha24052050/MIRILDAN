@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:mirildan/core/constants/app_strings.dart';
+import 'package:mirildan/core/localization/l10n/app_localizations.dart';
 import 'package:mirildan/data/models/entry.dart';
 import 'package:mirildan/features/galaxy/presentation/galaxy_screen.dart';
 import 'package:mirildan/features/galaxy/presentation/widgets/entry_detail_sheet.dart';
@@ -27,6 +28,13 @@ Entry _audioEntry({int id = 2}) => Entry(
   audioDurationMs: 3000,
 );
 
+MaterialApp _l10nApp({required Widget home}) => MaterialApp(
+  locale: const Locale('tr'),
+  localizationsDelegates: AppLocalizations.localizationsDelegates,
+  supportedLocales: AppLocalizations.supportedLocales,
+  home: home,
+);
+
 // ── Testler ────────────────────────────────────────────────────────────────────
 
 void main() {
@@ -39,7 +47,7 @@ void main() {
           overrides: [
             galaxyEntriesProvider.overrideWith((_) async => <Entry>[]),
           ],
-          child: const MaterialApp(home: GalaxyScreen()),
+          child: _l10nApp(home: const GalaxyScreen()),
         ),
       );
       await tester.pump();
@@ -54,7 +62,7 @@ void main() {
           overrides: [
             galaxyEntriesProvider.overrideWith((_) async => <Entry>[]),
           ],
-          child: const MaterialApp(home: GalaxyScreen()),
+          child: _l10nApp(home: const GalaxyScreen()),
         ),
       );
       await tester.pump();
@@ -70,7 +78,7 @@ void main() {
               (_) async => [_textEntry(), _audioEntry()],
             ),
           ],
-          child: const MaterialApp(home: GalaxyScreen()),
+          child: _l10nApp(home: const GalaxyScreen()),
         ),
       );
       await tester.pump();
@@ -85,7 +93,7 @@ void main() {
           overrides: [
             galaxyEntriesProvider.overrideWith((_) async => [_textEntry()]),
           ],
-          child: const MaterialApp(home: GalaxyScreen()),
+          child: _l10nApp(home: const GalaxyScreen()),
         ),
       );
       await tester.pump();
@@ -99,7 +107,7 @@ void main() {
           overrides: [
             galaxyEntriesProvider.overrideWith((_) async => <Entry>[]),
           ],
-          child: const MaterialApp(home: GalaxyScreen()),
+          child: _l10nApp(home: const GalaxyScreen()),
         ),
       );
       await tester.pump();
@@ -112,7 +120,7 @@ void main() {
     testWidgets('metin kaydını gösterir', (tester) async {
       await tester.pumpWidget(
         ProviderScope(
-          child: MaterialApp(
+          child: _l10nApp(
             home: Scaffold(body: EntryDetailSheet(entry: _textEntry())),
           ),
         ),
@@ -125,7 +133,7 @@ void main() {
     testWidgets('ses kaydı süresini gösterir', (tester) async {
       await tester.pumpWidget(
         ProviderScope(
-          child: MaterialApp(
+          child: _l10nApp(
             home: Scaffold(body: EntryDetailSheet(entry: _audioEntry())),
           ),
         ),
@@ -139,7 +147,7 @@ void main() {
     testWidgets('renk etiketi gösterir', (tester) async {
       await tester.pumpWidget(
         ProviderScope(
-          child: MaterialApp(
+          child: _l10nApp(
             home: Scaffold(body: EntryDetailSheet(entry: _textEntry())),
           ),
         ),
@@ -153,7 +161,7 @@ void main() {
     testWidgets('sil butonu görünür', (tester) async {
       await tester.pumpWidget(
         ProviderScope(
-          child: MaterialApp(
+          child: _l10nApp(
             home: Scaffold(body: EntryDetailSheet(entry: _textEntry())),
           ),
         ),

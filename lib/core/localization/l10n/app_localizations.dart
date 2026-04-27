@@ -182,11 +182,23 @@ abstract class AppLocalizations {
   /// **'Konuşmak için basılı tut'**
   String get recordHold;
 
+  /// No description provided for @recordRelease.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bırak, bitir.'**
+  String get recordRelease;
+
   /// No description provided for @recordWrite.
   ///
   /// In tr, this message translates to:
   /// **'Yaz'**
   String get recordWrite;
+
+  /// No description provided for @recordSwitchToAudio.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ses'**
+  String get recordSwitchToAudio;
 
   /// No description provided for @recordShuffle.
   ///
@@ -212,6 +224,18 @@ abstract class AppLocalizations {
   /// **'İsteğe bağlı...'**
   String get recordNoteHint;
 
+  /// No description provided for @recordTextHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ne hissediyorsun?'**
+  String get recordTextHint;
+
+  /// No description provided for @recordContinue.
+  ///
+  /// In tr, this message translates to:
+  /// **'Devam'**
+  String get recordContinue;
+
   /// No description provided for @recordSave.
   ///
   /// In tr, this message translates to:
@@ -223,6 +247,54 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'İptal'**
   String get recordCancel;
+
+  /// No description provided for @recordPermissionDenied.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mikrofon izni verilmedi. Metin olarak kaydet.'**
+  String get recordPermissionDenied;
+
+  /// No description provided for @recordSaveError.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bir sorun oluştu, tekrar dener misin?'**
+  String get recordSaveError;
+
+  /// No description provided for @recordCancelConfirmTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydı iptal et?'**
+  String get recordCancelConfirmTitle;
+
+  /// No description provided for @recordCancelConfirmBodyAudio.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu ses kaydı silinecek. Emin misin?'**
+  String get recordCancelConfirmBodyAudio;
+
+  /// No description provided for @recordCancelConfirmBodyText.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yazdıkların silinecek. Emin misin?'**
+  String get recordCancelConfirmBodyText;
+
+  /// No description provided for @recordCancelConfirmBodyColorPicker.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu an kaydedilmeyecek. Emin misin?'**
+  String get recordCancelConfirmBodyColorPicker;
+
+  /// No description provided for @recordCancelConfirmYes.
+  ///
+  /// In tr, this message translates to:
+  /// **'Evet, iptal et'**
+  String get recordCancelConfirmYes;
+
+  /// No description provided for @recordCancelConfirmNo.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hayır, devam et'**
+  String get recordCancelConfirmNo;
 
   /// No description provided for @emotionYellow.
   ///
@@ -284,11 +356,95 @@ abstract class AppLocalizations {
   /// **'Mırıldan hala burada. Ne zaman istersen döneriz.'**
   String get notifMissed30Days;
 
+  /// No description provided for @listViewTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kayıtlar'**
+  String get listViewTitle;
+
+  /// No description provided for @listViewEmpty.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz kayıt yok.'**
+  String get listViewEmpty;
+
+  /// No description provided for @listViewEmptySubtitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ne zaman istersen buradayız.'**
+  String get listViewEmptySubtitle;
+
+  /// No description provided for @listViewFilterAll.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tümü'**
+  String get listViewFilterAll;
+
+  /// No description provided for @listViewFilterAudio.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ses'**
+  String get listViewFilterAudio;
+
+  /// No description provided for @listViewFilterText.
+  ///
+  /// In tr, this message translates to:
+  /// **'Metin'**
+  String get listViewFilterText;
+
+  /// No description provided for @listViewFilterMixed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Karma'**
+  String get listViewFilterMixed;
+
+  /// No description provided for @listViewDeleteTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu kaydı sil?'**
+  String get listViewDeleteTitle;
+
+  /// No description provided for @listViewDeleteBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu işlem geri alınamaz.'**
+  String get listViewDeleteBody;
+
+  /// No description provided for @listViewDeleteConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Evet, sil'**
+  String get listViewDeleteConfirm;
+
+  /// No description provided for @listViewDeleteCancel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Vazgeç'**
+  String get listViewDeleteCancel;
+
+  /// No description provided for @listViewToday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugün'**
+  String get listViewToday;
+
+  /// No description provided for @listViewYesterday.
+  ///
+  /// In tr, this message translates to:
+  /// **'Dün'**
+  String get listViewYesterday;
+
   /// No description provided for @settingsTitle.
   ///
   /// In tr, this message translates to:
   /// **'Ayarlar'**
   String get settingsTitle;
+
+  /// No description provided for @settingsAppearanceSection.
+  ///
+  /// In tr, this message translates to:
+  /// **'Görünüm'**
+  String get settingsAppearanceSection;
 
   /// No description provided for @settingsTheme.
   ///
@@ -296,11 +452,47 @@ abstract class AppLocalizations {
   /// **'Tema'**
   String get settingsTheme;
 
+  /// No description provided for @settingsThemeDarkGalaxy.
+  ///
+  /// In tr, this message translates to:
+  /// **'Koyu Galaxy'**
+  String get settingsThemeDarkGalaxy;
+
+  /// No description provided for @settingsThemeGradientNight.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gradient Gece'**
+  String get settingsThemeGradientNight;
+
+  /// No description provided for @settingsThemeWhiteMinimal.
+  ///
+  /// In tr, this message translates to:
+  /// **'Beyaz Minimal'**
+  String get settingsThemeWhiteMinimal;
+
+  /// No description provided for @settingsThemePaper.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kağıt'**
+  String get settingsThemePaper;
+
   /// No description provided for @settingsLanguage.
   ///
   /// In tr, this message translates to:
   /// **'Dil'**
   String get settingsLanguage;
+
+  /// No description provided for @settingsLanguageTr.
+  ///
+  /// In tr, this message translates to:
+  /// **'Türkçe'**
+  String get settingsLanguageTr;
+
+  /// No description provided for @settingsLanguageEn.
+  ///
+  /// In tr, this message translates to:
+  /// **'English'**
+  String get settingsLanguageEn;
 
   /// No description provided for @settingsDateFormat.
   ///
@@ -308,17 +500,29 @@ abstract class AppLocalizations {
   /// **'Tarih Gösterimi'**
   String get settingsDateFormat;
 
-  /// No description provided for @settingsNotifications.
+  /// No description provided for @settingsNotificationsSection.
   ///
   /// In tr, this message translates to:
   /// **'Bildirimler'**
-  String get settingsNotifications;
+  String get settingsNotificationsSection;
 
-  /// No description provided for @settingsAccount.
+  /// No description provided for @settingsNotifications.
   ///
   /// In tr, this message translates to:
-  /// **'Hesap'**
-  String get settingsAccount;
+  /// **'Günlük hatırlatma'**
+  String get settingsNotifications;
+
+  /// No description provided for @settingsNotificationTime.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hatırlatma saati'**
+  String get settingsNotificationTime;
+
+  /// No description provided for @settingsDataSection.
+  ///
+  /// In tr, this message translates to:
+  /// **'Veri'**
+  String get settingsDataSection;
 
   /// No description provided for @settingsExport.
   ///
@@ -332,11 +536,71 @@ abstract class AppLocalizations {
   /// **'Tüm Verileri Sil'**
   String get settingsDeleteAll;
 
+  /// No description provided for @settingsDeleteAllConfirmTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tüm kayıtları sil?'**
+  String get settingsDeleteAllConfirmTitle;
+
+  /// No description provided for @settingsDeleteAllConfirmBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu işlem geri alınamaz. Tüm kayıtların ve tercihlerinin silinecek.'**
+  String get settingsDeleteAllConfirmBody;
+
+  /// No description provided for @settingsAccountSection.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesap'**
+  String get settingsAccountSection;
+
+  /// No description provided for @settingsAccount.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesap'**
+  String get settingsAccount;
+
+  /// No description provided for @settingsSignOut.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çıkış yap'**
+  String get settingsSignOut;
+
+  /// No description provided for @settingsSignOutConfirmTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çıkış yapmak istediğine emin misin?'**
+  String get settingsSignOutConfirmTitle;
+
+  /// No description provided for @settingsSignOutConfirmBody.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kayıtların cihazında saklanmaya devam eder.'**
+  String get settingsSignOutConfirmBody;
+
+  /// No description provided for @settingsGuest.
+  ///
+  /// In tr, this message translates to:
+  /// **'Misafir kullanıcı'**
+  String get settingsGuest;
+
+  /// No description provided for @settingsAboutSection.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hakkında'**
+  String get settingsAboutSection;
+
   /// No description provided for @settingsAbout.
   ///
   /// In tr, this message translates to:
   /// **'Hakkında'**
   String get settingsAbout;
+
+  /// No description provided for @settingsVersion.
+  ///
+  /// In tr, this message translates to:
+  /// **'Versiyon'**
+  String get settingsVersion;
 
   /// No description provided for @themeDarkGalaxy.
   ///
@@ -379,6 +643,66 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Ay Bazlı'**
   String get dateFormatMonthOnly;
+
+  /// No description provided for @authSignInTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hoş geldin.'**
+  String get authSignInTitle;
+
+  /// No description provided for @authCreateAccountTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesap oluştur.'**
+  String get authCreateAccountTitle;
+
+  /// No description provided for @authSignInWithGoogle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Google ile devam et'**
+  String get authSignInWithGoogle;
+
+  /// No description provided for @authOrDivider.
+  ///
+  /// In tr, this message translates to:
+  /// **'veya'**
+  String get authOrDivider;
+
+  /// No description provided for @authEmailHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'E-posta'**
+  String get authEmailHint;
+
+  /// No description provided for @authPasswordHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şifre'**
+  String get authPasswordHint;
+
+  /// No description provided for @authSignIn.
+  ///
+  /// In tr, this message translates to:
+  /// **'Giriş yap'**
+  String get authSignIn;
+
+  /// No description provided for @authCreateAccount.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesap oluştur'**
+  String get authCreateAccount;
+
+  /// No description provided for @authNoAccount.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabın yok mu? Kayıt ol'**
+  String get authNoAccount;
+
+  /// No description provided for @authHaveAccount.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabın var mı? Giriş yap'**
+  String get authHaveAccount;
 
   /// No description provided for @cancel.
   ///

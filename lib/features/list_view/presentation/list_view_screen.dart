@@ -4,8 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_spacing.dart';
-import '../../../core/constants/app_strings.dart';
 import '../../../core/constants/app_text_styles.dart';
+import '../../../core/localization/l10n_extensions.dart';
+import '../../../core/utils/responsive.dart';
 import '../../../data/models/entry.dart';
 import '../providers/list_view_providers.dart';
 import 'widgets/date_group_header.dart';
@@ -18,10 +19,10 @@ class ListViewScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final entriesAsync = ref.watch(filteredEntriesProvider);
     final currentlyPlayingId = ref.watch(playerProvider);
 
-    // Çalan kayıt silinince player'ı durdur
     ref.listen<AsyncValue<List<Entry>>>(filteredEntriesProvider, (_, next) {
       final playingId = ref.read(playerProvider);
       if (playingId == null) return;
@@ -32,7 +33,6 @@ class ListViewScreen extends ConsumerWidget {
       });
     });
 
-    // Çalan kaydı bul
     final currentEntry = entriesAsync.maybeWhen(
       data: (entries) => currentlyPlayingId == null
           ? null
@@ -52,7 +52,7 @@ class ListViewScreen extends ConsumerWidget {
           },
         ),
         title: Text(
-          AppStrings.listViewTitle,
+          l10n.listViewTitle,
           style: AppTextStyles.headlineLarge.copyWith(
             color: AppColors.darkOnSurface,
           ),
@@ -91,19 +91,25 @@ class _EntryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final items = _buildItems(entries);
-    return ListView.builder(
-      padding: const EdgeInsets.only(bottom: AppSpacing.xxl),
-      itemCount: items.length,
-      itemBuilder: (_, i) {
-        final item = items[i];
-        return item is DateTime
-            ? DateGroupHeader(date: item)
-            : EntryListTile(entry: item as Entry);
-      },
+    final wide = isTablet(context);
+    return Align(
+      alignment: Alignment.topCenter,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: wide ? 640 : double.infinity),
+        child: ListView.builder(
+          padding: const EdgeInsets.only(bottom: AppSpacing.xxl),
+          itemCount: items.length,
+          itemBuilder: (_, i) {
+            final item = items[i];
+            return item is DateTime
+                ? DateGroupHeader(date: item)
+                : EntryListTile(entry: item as Entry);
+          },
+        ),
+      ),
     );
   }
 
-  // DateTime ve Entry nesnelerini tek listede birleştirir
   static List<Object> _buildItems(List<Entry> entries) {
     final groups = <DateTime, List<Entry>>{};
     for (final e in entries) {
@@ -132,6 +138,7 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxl),
@@ -139,7 +146,7 @@ class _EmptyState extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              AppStrings.listViewEmpty,
+              l10n.listViewEmpty,
               style: AppTextStyles.headlineMedium.copyWith(
                 color: AppColors.darkOnSurface,
               ),
@@ -147,7 +154,7 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              AppStrings.listViewEmptySubtitle,
+              l10n.listViewEmptySubtitle,
               style: AppTextStyles.bodyMedium.copyWith(
                 color: AppColors.darkOnSurfaceVariant,
               ),
@@ -165,7 +172,7 @@ class _ErrorState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Text(
-        AppStrings.recordSaveError,
+        context.l10n.recordSaveError,
         style: AppTextStyles.bodyMedium.copyWith(
           color: AppColors.darkOnSurfaceVariant,
         ),

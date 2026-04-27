@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
-import '../../../../core/constants/app_strings.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/constants/emotion_colors.dart';
+import '../../../../core/localization/l10n_extensions.dart';
 import '../../../../core/utils/duration_formatter.dart';
 import '../../../../core/widgets/confirm_dialog.dart';
 import '../../../../data/models/entry.dart';
@@ -141,12 +141,13 @@ class EntryListTile extends ConsumerWidget {
   }
 
   Future<bool?> _confirmDelete(BuildContext context) {
+    final l10n = context.l10n;
     return showConfirmDialog(
       context: context,
-      title: AppStrings.listViewDeleteTitle,
-      body: AppStrings.listViewDeleteBody,
-      cancelLabel: AppStrings.listViewDeleteCancel,
-      confirmLabel: AppStrings.listViewDeleteConfirm,
+      title: l10n.listViewDeleteTitle,
+      body: l10n.listViewDeleteBody,
+      cancelLabel: l10n.listViewDeleteCancel,
+      confirmLabel: l10n.listViewDeleteConfirm,
     );
   }
 }

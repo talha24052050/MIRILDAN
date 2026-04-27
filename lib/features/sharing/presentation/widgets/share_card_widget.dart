@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
-import '../../../../core/constants/app_strings.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/constants/emotion_colors.dart';
 import '../../../../core/utils/duration_formatter.dart';
@@ -80,7 +79,7 @@ class ShareCardWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    AppStrings.appName,
+                    'Mırıldan',
                     style: AppTextStyles.labelSmall.copyWith(
                       color: AppColors.darkOnSurfaceVariant,
                       letterSpacing: 1.2,

@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mirildan/core/constants/app_strings.dart';
+import 'package:mirildan/core/localization/l10n/app_localizations.dart';
 import 'package:mirildan/features/onboarding/presentation/onboarding_screen.dart';
 
-Widget _wrap(Widget child) => ProviderScope(child: MaterialApp(home: child));
+Widget _wrap(Widget child) => ProviderScope(
+  child: MaterialApp(
+    locale: const Locale('tr'),
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
+    home: child,
+  ),
+);
 
 void main() {
   group('OnboardingScreen', () {

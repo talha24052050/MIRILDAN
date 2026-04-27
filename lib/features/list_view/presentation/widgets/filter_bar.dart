@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
-import '../../../../core/constants/app_strings.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/constants/emotion_colors.dart';
+import '../../../../core/localization/l10n_extensions.dart';
 import '../../../../data/models/entry.dart';
 import '../../providers/list_view_providers.dart';
 
@@ -17,6 +17,7 @@ class FilterBar extends ConsumerWidget {
     final filter = ref.watch(entryListFilterProvider);
     final notifier = ref.read(entryListFilterProvider.notifier);
 
+    final l10n = context.l10n;
     return SizedBox(
       height: 44,
       child: ListView(
@@ -24,7 +25,7 @@ class FilterBar extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
         children: [
           _FilterChip(
-            label: AppStrings.listViewFilterAll,
+            label: l10n.listViewFilterAll,
             isSelected: filter.color == null && filter.type == null,
             onTap: notifier.clear,
           ),
@@ -44,7 +45,7 @@ class FilterBar extends ConsumerWidget {
             ),
           ),
           _FilterChip(
-            label: AppStrings.listViewFilterAudio,
+            label: l10n.listViewFilterAudio,
             isSelected: filter.type == EntryType.audio,
             onTap: () => notifier.setType(
               filter.type == EntryType.audio ? null : EntryType.audio,
@@ -52,7 +53,7 @@ class FilterBar extends ConsumerWidget {
           ),
           const SizedBox(width: AppSpacing.sm),
           _FilterChip(
-            label: AppStrings.listViewFilterText,
+            label: l10n.listViewFilterText,
             isSelected: filter.type == EntryType.text,
             onTap: () => notifier.setType(
               filter.type == EntryType.text ? null : EntryType.text,
@@ -60,7 +61,7 @@ class FilterBar extends ConsumerWidget {
           ),
           const SizedBox(width: AppSpacing.sm),
           _FilterChip(
-            label: AppStrings.listViewFilterMixed,
+            label: l10n.listViewFilterMixed,
             isSelected: filter.type == EntryType.mixed,
             onTap: () => notifier.setType(
               filter.type == EntryType.mixed ? null : EntryType.mixed,

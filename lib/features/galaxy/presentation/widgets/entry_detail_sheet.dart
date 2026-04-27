@@ -3,10 +3,11 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
-import '../../../../core/constants/app_strings.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/constants/emotion_colors.dart';
+import '../../../../core/localization/l10n_extensions.dart';
 import '../../../../core/utils/duration_formatter.dart';
+import '../../../../core/utils/responsive.dart';
 import '../../../../core/widgets/confirm_dialog.dart';
 import '../../../../data/models/entry.dart';
 import '../../../../data/repositories/entry_repository.dart';
@@ -30,6 +31,9 @@ class EntryDetailSheet extends StatefulWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.xl)),
       ),
+      constraints: isTablet(context)
+          ? const BoxConstraints(maxWidth: 560)
+          : null,
       builder: (_) => EntryDetailSheet(entry: entry, onDeleted: onDeleted),
     );
   }
@@ -145,14 +149,14 @@ class _EntryDetailSheetState extends State<EntryDetailSheet> {
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
                       : const Icon(Icons.share_outlined, size: 18),
-                  label: Text(AppStrings.share),
+                  label: Text(context.l10n.share),
                 ),
               ),
               Expanded(
                 child: TextButton(
                   onPressed: () => _handleDelete(context),
                   style: TextButton.styleFrom(foregroundColor: AppColors.error),
-                  child: Text(AppStrings.listViewDeleteTitle),
+                  child: Text(context.l10n.listViewDeleteTitle),
                 ),
               ),
             ],
@@ -172,12 +176,13 @@ class _EntryDetailSheetState extends State<EntryDetailSheet> {
   }
 
   Future<void> _handleDelete(BuildContext context) async {
+    final l10n = context.l10n;
     final confirmed = await showConfirmDialog(
       context: context,
-      title: AppStrings.listViewDeleteTitle,
-      body: AppStrings.listViewDeleteBody,
-      cancelLabel: AppStrings.listViewDeleteCancel,
-      confirmLabel: AppStrings.listViewDeleteConfirm,
+      title: l10n.listViewDeleteTitle,
+      body: l10n.listViewDeleteBody,
+      cancelLabel: l10n.listViewDeleteCancel,
+      confirmLabel: l10n.listViewDeleteConfirm,
     );
     if (!confirmed) return;
 

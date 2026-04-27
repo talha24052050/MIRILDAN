@@ -7,6 +7,30 @@ Format: [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/)
 
 ## [Unreleased]
 
+## Aşama 13 — Çok Dilli Destek + Tablet Optimizasyonu + Son Cilalama
+
+**Branch:** `feature/phase-13-polish` | **Tarih:** Nisan 2026
+
+### Eklendi
+- `lib/core/localization/l10n_extensions.dart` — `context.l10n` extension helper
+- `lib/core/utils/responsive.dart` — `isTablet(context)` ve `responsive<T>()` yardımcı fonksiyonlar (600dp tablet breakpoint)
+
+### Değişti
+- **AppStrings → AppLocalizations geçişi:** Tüm ekranlardaki statik `AppStrings` sabitler çalışma zamanı `context.l10n.xxx` çağrılarıyla değiştirildi
+  - `auth_screen.dart`, `galaxy_screen.dart`, `entry_detail_sheet.dart`
+  - `list_view_screen.dart`, `filter_bar.dart`, `entry_list_tile.dart`, `date_group_header.dart`
+  - `recording_screen.dart`, `color_picker_screen.dart`
+  - `settings_screen.dart`, `onboarding_screen.dart`
+- **Tablet layout adaptasyonu:** Tüm ana ekranlar geniş ekranda ortalanmış, sınırlı genişlikte içerik gösterir
+  - `recording_screen.dart` — `_CenteredContent` widget (max 480px)
+  - `color_picker_screen.dart` — `Center > ConstrainedBox` (max 480px)
+  - `list_view_screen.dart` — liste max 640px
+  - `entry_detail_sheet.dart` — bottom sheet max 560px
+  - `onboarding_screen.dart` — butonlar max 480px
+- **Testler güncellendi:** Tüm widget testlerine `localizationsDelegates` ve `locale: Locale('tr')` eklendi
+
+---
+
 ## Aşama 12 — Paylaşım Özelliği
 
 **Branch:** `feature/phase-12-sharing` | **Tarih:** Nisan 2026

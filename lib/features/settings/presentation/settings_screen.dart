@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/constants/app_spacing.dart';
-import '../../../core/constants/app_strings.dart';
+import '../../../core/localization/l10n_extensions.dart';
 import '../../../core/providers/locale_provider.dart';
 import '../../../core/providers/theme_provider.dart';
 import '../../../core/theme/app_theme.dart';
@@ -16,35 +16,36 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final themeType = ref.watch(themeProvider);
     final locale = ref.watch(localeProvider);
     final notif = ref.watch(notificationProvider);
     final authUser = ref.watch(authStateProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text(AppStrings.settingsTitle)),
+      appBar: AppBar(title: Text(l10n.settingsTitle)),
       body: ListView(
         children: [
-          _SectionHeader(AppStrings.settingsAppearanceSection),
+          _SectionHeader(l10n.settingsAppearanceSection),
           _ThemeTile(current: themeType),
           _LanguageTile(current: locale.languageCode),
-          _SectionHeader(AppStrings.settingsNotificationsSection),
+          _SectionHeader(l10n.settingsNotificationsSection),
           SwitchListTile(
-            title: const Text(AppStrings.settingsNotifications),
+            title: Text(l10n.settingsNotifications),
             value: notif.enabled,
             onChanged: (v) =>
                 ref.read(notificationProvider.notifier).setEnabled(v),
           ),
           if (notif.enabled)
             ListTile(
-              title: const Text(AppStrings.settingsNotificationTime),
+              title: Text(l10n.settingsNotificationTime),
               trailing: Text(
                 notif.time.format(context),
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               onTap: () => _pickTime(context, ref, notif.time),
             ),
-          _SectionHeader(AppStrings.settingsAccountSection),
+          _SectionHeader(l10n.settingsAccountSection),
           authUser.when(
             data: (user) => user != null
                 ? Column(
@@ -54,20 +55,20 @@ class SettingsScreen extends ConsumerWidget {
                         title: Text(
                           user.email ??
                               user.displayName ??
-                              AppStrings.settingsAccount,
+                              l10n.settingsAccount,
                         ),
                         subtitle: Text(user.email != null ? '' : user.uid),
                       ),
                       ListTile(
                         leading: const Icon(Icons.logout),
-                        title: const Text(AppStrings.settingsSignOut),
+                        title: Text(l10n.settingsSignOut),
                         onTap: () => _confirmSignOut(context, ref),
                       ),
                     ],
                   )
                 : ListTile(
                     leading: const Icon(Icons.person_outline),
-                    title: const Text(AppStrings.settingsGuest),
+                    title: Text(l10n.settingsGuest),
                     trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                     onTap: () => context.push('/auth'),
                   ),
@@ -81,19 +82,19 @@ class SettingsScreen extends ConsumerWidget {
             ),
             error: (_, e) => const SizedBox.shrink(),
           ),
-          _SectionHeader(AppStrings.settingsDataSection),
+          _SectionHeader(l10n.settingsDataSection),
           ListTile(
             leading: const Icon(Icons.delete_outline),
-            title: const Text(AppStrings.settingsDeleteAll),
+            title: Text(l10n.settingsDeleteAll),
             textColor: Theme.of(context).colorScheme.error,
             iconColor: Theme.of(context).colorScheme.error,
             onTap: () => _confirmDeleteAll(context, ref),
           ),
-          _SectionHeader(AppStrings.settingsAboutSection),
-          const ListTile(
-            leading: Icon(Icons.info_outline),
-            title: Text(AppStrings.appName),
-            trailing: Text('v1.0.0'),
+          _SectionHeader(l10n.settingsAboutSection),
+          ListTile(
+            leading: const Icon(Icons.info_outline),
+            title: const Text('Mırıldan'),
+            trailing: const Text('v1.0.0'),
           ),
           SizedBox(height: AppSpacing.xl),
         ],
@@ -113,19 +114,20 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   Future<void> _confirmSignOut(BuildContext context, WidgetRef ref) async {
+    final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text(AppStrings.settingsSignOutConfirmTitle),
-        content: const Text(AppStrings.settingsSignOutConfirmBody),
+        title: Text(l10n.settingsSignOutConfirmTitle),
+        content: Text(l10n.settingsSignOutConfirmBody),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text(AppStrings.cancel),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text(AppStrings.settingsSignOut),
+            child: Text(l10n.settingsSignOut),
           ),
         ],
       ),
@@ -136,22 +138,23 @@ class SettingsScreen extends ConsumerWidget {
   }
 
   Future<void> _confirmDeleteAll(BuildContext context, WidgetRef ref) async {
+    final l10n = context.l10n;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text(AppStrings.settingsDeleteAllConfirmTitle),
-        content: const Text(AppStrings.settingsDeleteAllConfirmBody),
+        title: Text(l10n.settingsDeleteAllConfirmTitle),
+        content: Text(l10n.settingsDeleteAllConfirmBody),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: const Text(AppStrings.cancel),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: TextButton.styleFrom(
               foregroundColor: Theme.of(context).colorScheme.error,
             ),
-            child: const Text(AppStrings.delete),
+            child: Text(l10n.delete),
           ),
         ],
       ),
@@ -191,27 +194,32 @@ class _ThemeTile extends ConsumerWidget {
   const _ThemeTile({required this.current});
   final AppThemeType current;
 
-  static const _labels = {
-    AppThemeType.darkGalaxy: AppStrings.settingsThemeDarkGalaxy,
-    AppThemeType.gradientNight: AppStrings.settingsThemeGradientNight,
-    AppThemeType.whiteMinimal: AppStrings.settingsThemeWhiteMinimal,
-    AppThemeType.paper: AppStrings.settingsThemePaper,
-  };
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final labels = {
+      AppThemeType.darkGalaxy: l10n.settingsThemeDarkGalaxy,
+      AppThemeType.gradientNight: l10n.settingsThemeGradientNight,
+      AppThemeType.whiteMinimal: l10n.settingsThemeWhiteMinimal,
+      AppThemeType.paper: l10n.settingsThemePaper,
+    };
+
     return ListTile(
       leading: const Icon(Icons.palette_outlined),
-      title: const Text(AppStrings.settingsTheme),
+      title: Text(l10n.settingsTheme),
       trailing: Text(
-        _labels[current] ?? current.name,
+        labels[current] ?? current.name,
         style: Theme.of(context).textTheme.bodyMedium,
       ),
-      onTap: () => _showPicker(context, ref),
+      onTap: () => _showPicker(context, ref, labels),
     );
   }
 
-  void _showPicker(BuildContext context, WidgetRef ref) {
+  void _showPicker(
+    BuildContext context,
+    WidgetRef ref,
+    Map<AppThemeType, String> labels,
+  ) {
     showModalBottomSheet<void>(
       context: context,
       builder: (ctx) => SafeArea(
@@ -228,7 +236,7 @@ class _ThemeTile extends ConsumerWidget {
             children: AppThemeType.values
                 .map(
                   (t) => RadioListTile<AppThemeType>(
-                    title: Text(_labels[t] ?? t.name),
+                    title: Text(labels[t] ?? t.name),
                     value: t,
                   ),
                 )
@@ -246,20 +254,29 @@ class _LanguageTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     return ListTile(
       leading: const Icon(Icons.language),
-      title: const Text(AppStrings.settingsLanguage),
+      title: Text(l10n.settingsLanguage),
       trailing: Text(
-        current == 'tr'
-            ? AppStrings.settingsLanguageTr
-            : AppStrings.settingsLanguageEn,
+        current == 'tr' ? l10n.settingsLanguageTr : l10n.settingsLanguageEn,
         style: Theme.of(context).textTheme.bodyMedium,
       ),
-      onTap: () => _showPicker(context, ref),
+      onTap: () => _showPicker(
+        context,
+        ref,
+        trLabel: l10n.settingsLanguageTr,
+        enLabel: l10n.settingsLanguageEn,
+      ),
     );
   }
 
-  void _showPicker(BuildContext context, WidgetRef ref) {
+  void _showPicker(
+    BuildContext context,
+    WidgetRef ref, {
+    required String trLabel,
+    required String enLabel,
+  }) {
     showModalBottomSheet<void>(
       context: context,
       builder: (ctx) => SafeArea(
@@ -273,15 +290,9 @@ class _LanguageTile extends ConsumerWidget {
           },
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: const [
-              RadioListTile<String>(
-                title: Text(AppStrings.settingsLanguageTr),
-                value: 'tr',
-              ),
-              RadioListTile<String>(
-                title: Text(AppStrings.settingsLanguageEn),
-                value: 'en',
-              ),
+            children: [
+              RadioListTile<String>(title: Text(trLabel), value: 'tr'),
+              RadioListTile<String>(title: Text(enLabel), value: 'en'),
             ],
           ),
         ),
