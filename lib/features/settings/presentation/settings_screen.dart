@@ -72,15 +72,18 @@ class SettingsScreen extends ConsumerWidget {
                     trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                     onTap: () => context.push('/auth'),
                   ),
-            loading: () => const ListTile(
-              leading: SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(strokeWidth: 2),
-              ),
-              title: Text('...'),
+            loading: () => ListTile(
+              leading: const Icon(Icons.person_outline),
+              title: Text(l10n.settingsGuest),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () => context.push('/auth'),
             ),
-            error: (_, e) => const SizedBox.shrink(),
+            error: (_, e) => ListTile(
+              leading: const Icon(Icons.person_outline),
+              title: Text(l10n.settingsGuest),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () => context.push('/auth'),
+            ),
           ),
           _SectionHeader(l10n.settingsDataSection),
           ListTile(

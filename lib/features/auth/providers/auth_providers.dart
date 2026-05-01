@@ -14,8 +14,13 @@ AuthService authService(Ref ref) => AuthService();
 // ── Mevcut kullanıcı stream'i ──────────────────────────────────────────────
 
 @riverpod
-Stream<User?> authState(Ref ref) {
-  return ref.watch(authServiceProvider).authStateChanges;
+Stream<User?> authState(Ref ref) async* {
+  try {
+    yield* ref.watch(authServiceProvider).authStateChanges;
+  } catch (_) {
+    // Firebase başlatılmamışsa misafir olarak devam et
+    yield null;
+  }
 }
 
 // ── Onboarding tamamlandı mı? ──────────────────────────────────────────────

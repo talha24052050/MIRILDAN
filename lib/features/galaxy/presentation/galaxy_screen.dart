@@ -104,6 +104,13 @@ class _GalaxyScreenState extends ConsumerState<GalaxyScreen>
             ),
             onPressed: () => context.push(AppRoutes.listView),
           ),
+          IconButton(
+            icon: const Icon(
+              Icons.settings_outlined,
+              color: AppColors.darkOnSurface,
+            ),
+            onPressed: () => context.push(AppRoutes.settings),
+          ),
           const SizedBox(width: AppSpacing.xs),
         ],
       ),
