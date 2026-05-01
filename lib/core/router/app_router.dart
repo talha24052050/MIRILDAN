@@ -17,7 +17,6 @@ final appRouter = GoRouter(
   debugLogDiagnostics: false,
   redirect: (context, state) async {
     final to = state.uri.path;
-    // Onboarding ve auth rotalarında döngüyü engelle
     if (to == AppRoutes.onboarding || to == AppRoutes.auth) return null;
 
     try {
@@ -30,22 +29,66 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.onboarding,
       name: 'onboarding',
-      builder: (context, state) => const OnboardingScreen(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const OnboardingScreen(),
+        transitionsBuilder: (context, animation, _, child) => FadeTransition(
+          opacity: CurvedAnimation(parent: animation, curve: Curves.easeOut),
+          child: child,
+        ),
+      ),
     ),
     GoRoute(
       path: AppRoutes.auth,
       name: 'auth',
-      builder: (context, state) => const AuthScreen(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const AuthScreen(),
+        transitionsBuilder: (context, animation, _, child) => FadeTransition(
+          opacity: CurvedAnimation(parent: animation, curve: Curves.easeOut),
+          child: child,
+        ),
+      ),
     ),
     GoRoute(
       path: AppRoutes.galaxy,
       name: 'galaxy',
-      builder: (context, state) => const GalaxyScreen(),
+      // Uzayda belirme hissi: hafif zoom-in + fade
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const GalaxyScreen(),
+        transitionsBuilder: (context, animation, _, child) {
+          final fade = CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeOut,
+          );
+          final scale = Tween<double>(begin: 0.94, end: 1.0).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeOutCubic),
+          );
+          return FadeTransition(
+            opacity: fade,
+            child: ScaleTransition(scale: scale, child: child),
+          );
+        },
+      ),
     ),
     GoRoute(
       path: AppRoutes.record,
       name: 'record',
-      builder: (context, state) => const RecordingScreen(),
+      // Kayıt ekranı aşağıdan yükselir
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const RecordingScreen(),
+        transitionsBuilder: (context, animation, _, child) => SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, 1),
+            end: Offset.zero,
+          ).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeOutCubic),
+          ),
+          child: child,
+        ),
+      ),
       routes: [
         GoRoute(
           path: AppRoutes.colorPickerRelative,
@@ -59,18 +102,16 @@ final appRouter = GoRouter(
                 audioDurationMs: extra['durationMs'] as int?,
                 text: extra['text'] as String?,
               ),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                    return SlideTransition(
-                      position: animation.drive(
-                        Tween(
-                          begin: const Offset(0, 1),
-                          end: Offset.zero,
-                        ).chain(CurveTween(curve: Curves.easeOutCubic)),
-                      ),
-                      child: child,
-                    );
-                  },
+              transitionsBuilder: (context, animation, _, child) =>
+                  SlideTransition(
+                    position: animation.drive(
+                      Tween(
+                        begin: const Offset(0, 1),
+                        end: Offset.zero,
+                      ).chain(CurveTween(curve: Curves.easeOutCubic)),
+                    ),
+                    child: child,
+                  ),
             );
           },
         ),
@@ -87,12 +128,44 @@ final appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.listView,
       name: 'listView',
-      builder: (context, state) => const ListViewScreen(),
+      // Liste sağdan kayarak gelir
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const ListViewScreen(),
+        transitionsBuilder: (context, animation, _, child) => SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(1, 0),
+            end: Offset.zero,
+          ).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeOutCubic),
+          ),
+          child: FadeTransition(
+            opacity: CurvedAnimation(parent: animation, curve: Curves.easeOut),
+            child: child,
+          ),
+        ),
+      ),
     ),
     GoRoute(
       path: AppRoutes.settings,
       name: 'settings',
-      builder: (context, state) => const SettingsScreen(),
+      // Ayarlar aşağıdan yükselir
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const SettingsScreen(),
+        transitionsBuilder: (context, animation, _, child) => SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, 1),
+            end: Offset.zero,
+          ).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeOutCubic),
+          ),
+          child: FadeTransition(
+            opacity: CurvedAnimation(parent: animation, curve: Curves.easeOut),
+            child: child,
+          ),
+        ),
+      ),
     ),
   ],
   errorBuilder: (context, state) =>

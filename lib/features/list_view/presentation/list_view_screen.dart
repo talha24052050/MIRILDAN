@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +15,11 @@ import 'widgets/date_group_header.dart';
 import 'widgets/entry_list_tile.dart';
 import 'widgets/filter_bar.dart';
 import 'widgets/mini_player_bar.dart';
+
+// FilterBar yüksekliği — Stack içi padding hesabı için
+const double _kFilterBarHeight = 52.0;
+// MiniPlayerBar tahmini yüksekliği
+const double _kPlayerBarHeight = 96.0;
 
 class ListViewScreen extends ConsumerWidget {
   const ListViewScreen({super.key});
@@ -40,6 +47,8 @@ class ListViewScreen extends ConsumerWidget {
       orElse: () => null,
     );
 
+    final hasPlayer = currentEntry != null;
+
     return Scaffold(
       backgroundColor: AppColors.darkBackground,
       appBar: AppBar(
@@ -58,11 +67,13 @@ class ListViewScreen extends ConsumerWidget {
           ),
         ),
       ),
-      body: Column(
+      // Stack: liste tam ekran, FilterBar + MiniPlayerBar üste bindirilir
+      body: Stack(
         children: [
-          const FilterBar(),
-          const SizedBox(height: AppSpacing.sm),
-          Expanded(
+          // İçerik — üstten ve alttan glass bar için boşluk bırakır
+          Positioned.fill(
+            top: _kFilterBarHeight,
+            bottom: hasPlayer ? _kPlayerBarHeight : 0,
             child: entriesAsync.when(
               loading: () => const Center(
                 child: CircularProgressIndicator(color: AppColors.accent),
@@ -73,9 +84,80 @@ class ListViewScreen extends ConsumerWidget {
                   : _EntryList(entries: entries),
             ),
           ),
-          if (currentEntry != null)
-            MiniPlayerBar(key: ValueKey(currentEntry.id), entry: currentEntry),
+
+          // Glass filter bar — üstte sabitleniş
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: _GlassFilterBar(),
+          ),
+
+          // Glass mini player — yalnızca aktif oynatma varsa altta gösterilir
+          if (hasPlayer)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: _GlassMiniPlayer(
+                entry: currentEntry,
+                key: ValueKey(currentEntry.id),
+              ),
+            ),
         ],
+      ),
+    );
+  }
+}
+
+// ── Glass wrapper'lar ────────────────────────────────────────────────────────
+
+class _GlassFilterBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ClipRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+        child: Container(
+          height: _kFilterBarHeight,
+          decoration: BoxDecoration(
+            color: AppColors.darkBackground.withValues(alpha: 0.72),
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.white.withValues(alpha: 0.06),
+                width: 0.5,
+              ),
+            ),
+          ),
+          child: const FilterBar(),
+        ),
+      ),
+    );
+  }
+}
+
+class _GlassMiniPlayer extends StatelessWidget {
+  const _GlassMiniPlayer({super.key, required this.entry});
+
+  final Entry entry;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppColors.darkSurface.withValues(alpha: 0.78),
+            border: Border(
+              top: BorderSide(
+                color: Colors.white.withValues(alpha: 0.07),
+                width: 0.5,
+              ),
+            ),
+          ),
+          child: MiniPlayerBar(entry: entry),
+        ),
       ),
     );
   }
@@ -113,11 +195,7 @@ class _EntryList extends StatelessWidget {
   static List<Object> _buildItems(List<Entry> entries) {
     final groups = <DateTime, List<Entry>>{};
     for (final e in entries) {
-      final key = DateTime(
-        e.createdAt.year,
-        e.createdAt.month,
-        e.createdAt.day,
-      );
+      final key = DateTime(e.createdAt.year, e.createdAt.month, e.createdAt.day);
       (groups[key] ??= []).add(e);
     }
 
@@ -133,34 +211,66 @@ class _EntryList extends StatelessWidget {
   }
 }
 
-class _EmptyState extends StatelessWidget {
+class _EmptyState extends StatefulWidget {
   const _EmptyState();
+
+  @override
+  State<_EmptyState> createState() => _EmptyStateState();
+}
+
+class _EmptyStateState extends State<_EmptyState>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _floatController;
+  late final Animation<double> _floatAnim;
+
+  @override
+  void initState() {
+    super.initState();
+    _floatController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 3400),
+    )..repeat(reverse: true);
+    _floatAnim = Tween<double>(begin: -8.0, end: 8.0).animate(
+      CurvedAnimation(parent: _floatController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _floatController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxl),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              l10n.listViewEmpty,
-              style: AppTextStyles.headlineMedium.copyWith(
-                color: AppColors.darkOnSurface,
+      child: AnimatedBuilder(
+        animation: _floatAnim,
+        builder: (_, child) =>
+            Transform.translate(offset: Offset(0, _floatAnim.value), child: child),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxl),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                l10n.listViewEmpty,
+                style: AppTextStyles.headlineMedium.copyWith(
+                  color: AppColors.darkOnSurface,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            Text(
-              l10n.listViewEmptySubtitle,
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.darkOnSurfaceVariant,
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                l10n.listViewEmptySubtitle,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: AppColors.darkOnSurfaceVariant,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

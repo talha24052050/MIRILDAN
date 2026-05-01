@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -27,10 +29,7 @@ class EntryDetailSheet extends StatefulWidget {
   }) {
     return showModalBottomSheet(
       context: context,
-      backgroundColor: AppColors.darkSurface,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.xl)),
-      ),
+      backgroundColor: Colors.transparent,
       constraints: isTablet(context)
           ? const BoxConstraints(maxWidth: 560)
           : null,
@@ -51,117 +50,138 @@ class _EntryDetailSheetState extends State<EntryDetailSheet> {
   @override
   Widget build(BuildContext context) {
     final emotionColor = EmotionColor.values.byName(entry.color.name);
-    final dateStr = DateFormat(
-      'd MMMM yyyy, HH:mm',
-      'tr_TR',
-    ).format(entry.createdAt);
+    final dateStr = DateFormat('d MMMM yyyy, HH:mm', 'tr_TR')
+        .format(entry.createdAt);
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.xl,
-        AppSpacing.md,
-        AppSpacing.xl,
-        AppSpacing.xl,
+    return ClipRRect(
+      borderRadius: const BorderRadius.vertical(
+        top: Radius.circular(AppRadius.xl),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Handle
-          Center(
-            child: Container(
-              width: 36,
-              height: 4,
-              decoration: BoxDecoration(
-                color: AppColors.darkSurfaceVariant,
-                borderRadius: BorderRadius.circular(AppRadius.full),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppColors.darkSurface.withValues(alpha: 0.88),
+            border: Border(
+              top: BorderSide(
+                color: Colors.white.withValues(alpha: 0.08),
+                width: 0.5,
               ),
             ),
           ),
-          const SizedBox(height: AppSpacing.lg),
-
-          // Renk + tarih
-          Row(
-            children: [
-              Container(
-                width: 12,
-                height: 12,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: emotionColor.color,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.sm),
-              Text(
-                emotionColor.labelTr,
-                style: AppTextStyles.labelSmall.copyWith(
-                  color: emotionColor.color,
-                ),
-              ),
-              const Spacer(),
-              Text(
-                dateStr,
-                style: AppTextStyles.labelSmall.copyWith(
-                  color: AppColors.darkOnSurfaceVariant,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.lg),
-
-          // İçerik
-          if (entry.type == EntryType.audio || entry.type == EntryType.mixed)
-            _AudioRow(entry: entry),
-
-          if (entry.text != null && entry.text!.isNotEmpty) ...[
-            if (entry.type == EntryType.mixed)
-              const SizedBox(height: AppSpacing.md),
-            Text(
-              entry.text!,
-              style: AppTextStyles.bodyLarge.copyWith(
-                color: AppColors.darkOnSurface,
-              ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.xl,
+              AppSpacing.md,
+              AppSpacing.xl,
+              AppSpacing.xl,
             ),
-          ],
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Handle
+                Center(
+                  child: Container(
+                    width: 36,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: AppColors.darkSurfaceVariant,
+                      borderRadius: BorderRadius.circular(AppRadius.full),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.lg),
 
-          if (entry.note != null && entry.note!.isNotEmpty) ...[
-            const SizedBox(height: AppSpacing.md),
-            Text(
-              entry.note!,
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.darkOnSurfaceVariant,
-              ),
+                // Renk + tarih
+                Row(
+                  children: [
+                    Container(
+                      width: 12,
+                      height: 12,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: emotionColor.color,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    Text(
+                      emotionColor.labelTr,
+                      style: AppTextStyles.labelSmall.copyWith(
+                        color: emotionColor.color,
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      dateStr,
+                      style: AppTextStyles.labelSmall.copyWith(
+                        color: AppColors.darkOnSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.lg),
+
+                // İçerik
+                if (entry.type == EntryType.audio ||
+                    entry.type == EntryType.mixed)
+                  _AudioRow(entry: entry),
+
+                if (entry.text != null && entry.text!.isNotEmpty) ...[
+                  if (entry.type == EntryType.mixed)
+                    const SizedBox(height: AppSpacing.md),
+                  Text(
+                    entry.text!,
+                    style: AppTextStyles.bodyLarge.copyWith(
+                      color: AppColors.darkOnSurface,
+                    ),
+                  ),
+                ],
+
+                if (entry.note != null && entry.note!.isNotEmpty) ...[
+                  const SizedBox(height: AppSpacing.md),
+                  Text(
+                    entry.note!,
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: AppColors.darkOnSurfaceVariant,
+                    ),
+                  ),
+                ],
+
+                const SizedBox(height: AppSpacing.xl),
+
+                // Paylaş + Sil butonları
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextButton.icon(
+                        onPressed:
+                            _sharing ? null : () => _handleShare(context),
+                        icon: _sharing
+                            ? const SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(
+                                    strokeWidth: 2),
+                              )
+                            : const Icon(Icons.share_outlined, size: 18),
+                        label: Text(context.l10n.share),
+                      ),
+                    ),
+                    Expanded(
+                      child: TextButton(
+                        onPressed: () => _handleDelete(context),
+                        style: TextButton.styleFrom(
+                            foregroundColor: AppColors.error),
+                        child: Text(context.l10n.listViewDeleteTitle),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
-
-          const SizedBox(height: AppSpacing.xl),
-
-          // Paylaş + Sil butonları
-          Row(
-            children: [
-              Expanded(
-                child: TextButton.icon(
-                  onPressed: _sharing ? null : () => _handleShare(context),
-                  icon: _sharing
-                      ? const SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
-                      : const Icon(Icons.share_outlined, size: 18),
-                  label: Text(context.l10n.share),
-                ),
-              ),
-              Expanded(
-                child: TextButton(
-                  onPressed: () => _handleDelete(context),
-                  style: TextButton.styleFrom(foregroundColor: AppColors.error),
-                  child: Text(context.l10n.listViewDeleteTitle),
-                ),
-              ),
-            ],
           ),
-        ],
+        ),
       ),
     );
   }

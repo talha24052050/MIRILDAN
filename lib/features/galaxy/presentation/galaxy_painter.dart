@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/emotion_colors.dart';
 import '../../../data/models/entry.dart';
 
-// Her nokta için hesaplanan konum + meta bilgi
 class GalaxyDotData {
   const GalaxyDotData({
     required this.entry,
@@ -28,19 +27,22 @@ class GalaxyPainter extends CustomPainter {
   final List<Entry> entries;
   final int? highlightedId;
 
-  // 0.0–1.0 arası değer — yeni eklenen nokta animasyonu için
+  // 0.0–1.0 arası değer — pulse animasyonu için
   final double animationValue;
 
-  // Dışarıdan erişilebilir dot konumları (hit-test için)
   final List<GalaxyDotData> dots = [];
 
   static const double _baseRadius = 6.0;
   static const double _highlightRadius = 9.0;
-  static const double _armSpacing = 60.0; // spiral kollar arası mesafe
+  static const double _armSpacing = 60.0;
+  static const int _starCount = 140;
 
   @override
   void paint(Canvas canvas, Size size) {
     dots.clear();
+
+    _drawStarField(canvas, size);
+
     if (entries.isEmpty) return;
 
     final center = Offset(size.width / 2, size.height / 2);
@@ -52,8 +54,28 @@ class GalaxyPainter extends CustomPainter {
       final radius = isHighlighted ? _highlightRadius : _baseRadius;
 
       dots.add(GalaxyDotData(entry: entry, position: position, radius: radius));
-
       _drawDot(canvas, entry, position, radius, isHighlighted);
+    }
+  }
+
+  void _drawStarField(Canvas canvas, Size size) {
+    // Sabit seed — her frame aynı yıldız konumları, animasyon yalnızca parlaklığı etkiler
+    final rand = math.Random(42);
+
+    for (int i = 0; i < _starCount; i++) {
+      final x = rand.nextDouble() * size.width;
+      final y = rand.nextDouble() * size.height;
+      final r = rand.nextDouble() * 1.4 + 0.3;
+      // Her yıldızın kendi fazı → birbirinden bağımsız titreşir
+      final phase = rand.nextDouble() * math.pi * 2;
+      final twinkle = 0.3 + 0.7 * ((math.sin(animationValue * math.pi * 2 + phase) + 1) / 2);
+      final baseAlpha = rand.nextDouble() * 0.5 + 0.08;
+
+      canvas.drawCircle(
+        Offset(x, y),
+        r,
+        Paint()..color = Colors.white.withValues(alpha: baseAlpha * twinkle),
+      );
     }
   }
 
@@ -62,7 +84,6 @@ class GalaxyPainter extends CustomPainter {
     final goldenAngle = math.pi * (3 - math.sqrt(5)); // ~137.5°
     final angle = index * goldenAngle;
 
-    // Merkeze yakın noktalar daha sıkışık, kenara doğru açılır
     final maxRadius = math.min(size.width, size.height) * 0.42;
     final t = index / math.max(total - 1, 1);
     final r = math.sqrt(t) * maxRadius + _armSpacing * 0.3;
@@ -83,24 +104,29 @@ class GalaxyPainter extends CustomPainter {
     final emotionColor = EmotionColor.values.byName(entry.color.name);
     final color = emotionColor.color;
 
+    // Glow yoğunluğu ve boyutu animasyonla nefes alır
+    final breathe = 0.5 + animationValue * 0.5; // 0.5..1.0
+    final glowAlpha = 0.08 + breathe * 0.14;
+    final glowExtra = breathe * 2.5;
+
     if (isHighlighted) {
-      // Halo efekti
+      // Halo efekti — pulse ile genişler
       canvas.drawCircle(
         position,
-        radius + 6,
+        radius + 8 + glowExtra,
         Paint()
-          ..color = color.withValues(alpha: 0.25)
-          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8),
+          ..color = color.withValues(alpha: 0.28 * breathe)
+          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 10),
       );
     }
 
-    // Glow katmanı
+    // Glow katmanı — nefes alır
     canvas.drawCircle(
       position,
-      radius + 3,
+      radius + 3 + glowExtra,
       Paint()
-        ..color = color.withValues(alpha: 0.15)
-        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4),
+        ..color = color.withValues(alpha: glowAlpha)
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5),
     );
 
     // Ana nokta

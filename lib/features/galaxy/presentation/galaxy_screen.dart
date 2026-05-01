@@ -220,36 +220,70 @@ class _GalaxyCanvas extends StatelessWidget {
 
 // ── Boş durum ─────────────────────────────────────────────────────────────────
 
-class _EmptyState extends StatelessWidget {
+class _EmptyState extends StatefulWidget {
   const _EmptyState({required this.onRecord});
 
   final VoidCallback onRecord;
 
   @override
+  State<_EmptyState> createState() => _EmptyStateState();
+}
+
+class _EmptyStateState extends State<_EmptyState>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _floatController;
+  late final Animation<double> _floatAnim;
+
+  @override
+  void initState() {
+    super.initState();
+    _floatController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 3200),
+    )..repeat(reverse: true);
+    _floatAnim = Tween<double>(begin: -10.0, end: 10.0).animate(
+      CurvedAnimation(parent: _floatController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _floatController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            l10n.galaxyEmpty,
-            style: AppTextStyles.displayMedium.copyWith(
-              color: AppColors.darkOnSurface,
+      child: AnimatedBuilder(
+        animation: _floatAnim,
+        builder: (_, child) => Transform.translate(
+          offset: Offset(0, _floatAnim.value),
+          child: child,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              l10n.galaxyEmpty,
+              style: AppTextStyles.displayMedium.copyWith(
+                color: AppColors.darkOnSurface,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            l10n.galaxyEmptySubtitle,
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.darkOnSurfaceVariant,
+            const SizedBox(height: AppSpacing.sm),
+            Text(
+              l10n.galaxyEmptySubtitle,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.darkOnSurfaceVariant,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: AppSpacing.xxl),
-          _RecordButton(onPressed: onRecord),
-        ],
+            const SizedBox(height: AppSpacing.xxl),
+            _RecordButton(onPressed: widget.onRecord),
+          ],
+        ),
       ),
     );
   }
