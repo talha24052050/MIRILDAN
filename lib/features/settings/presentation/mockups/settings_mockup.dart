@@ -152,15 +152,17 @@ class _SettingsMockupState extends State<SettingsMockup> {
               },
               child: Column(
                 children: AppThemeType.values
-                    .map((t) => RadioListTile<AppThemeType>(
-                          value: t,
-                          title: Text(
-                            _themeName(t),
-                            style: AppTextStyles.bodyLarge.copyWith(
-                              color: AppColors.darkOnSurface,
-                            ),
+                    .map(
+                      (t) => RadioListTile<AppThemeType>(
+                        value: t,
+                        title: Text(
+                          _themeName(t),
+                          style: AppTextStyles.bodyLarge.copyWith(
+                            color: AppColors.darkOnSurface,
                           ),
-                        ))
+                        ),
+                      ),
+                    )
                     .toList(),
               ),
             ),
@@ -226,12 +228,18 @@ class _SettingsTile extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: AppSpacing.xs),
-                const Icon(Icons.chevron_right,
-                    color: AppColors.darkOnSurfaceVariant, size: 18),
+                const Icon(
+                  Icons.chevron_right,
+                  color: AppColors.darkOnSurfaceVariant,
+                  size: 18,
+                ),
               ],
             )
-          : const Icon(Icons.chevron_right,
-              color: AppColors.darkOnSurfaceVariant, size: 18),
+          : const Icon(
+              Icons.chevron_right,
+              color: AppColors.darkOnSurfaceVariant,
+              size: 18,
+            ),
       onTap: onTap,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     );
